@@ -7,13 +7,13 @@ export interface SdlImageInfo {
 }
 
 export const SDL_IMAGES = {
-  'hero-home': { width: 1671, height: 940, widths: [640, 1024, 1600] },
-  'hero-home-mobile': { width: 940, height: 1671, widths: [640, 940] },
-  'track-hero': { width: 1672, height: 836, widths: [640, 1024, 1600] },
+  'hero-home': { width: 2400, height: 1350, widths: [640, 1024, 1600, 2400] },
+  'hero-home-mobile': { width: 1602, height: 2848, widths: [640, 1024, 1600] },
+  'track-hero': { width: 2400, height: 1200, widths: [640, 1024, 1600, 2400] },
   'locations-hero': { width: 1024, height: 512, widths: [640, 1024] },
-  'callback-banner': { width: 1672, height: 557, widths: [640, 1024, 1600] },
-  'services-hero': { width: 1672, height: 697, widths: [640, 1024, 1600] },
-  'about-hero': { width: 1672, height: 697, widths: [640, 1024, 1600] },
+  'callback-banner': { width: 2400, height: 800, widths: [640, 1024, 1600, 2400] },
+  'services-hero': { width: 2400, height: 1000, widths: [640, 1024, 1600, 2400] },
+  'about-hero': { width: 2400, height: 1000, widths: [640, 1024, 1600, 2400] },
   'service-priority-express': { width: 340, height: 340, widths: [340, 640, 1024, 1400] },
   'service-freight-linehaul': { width: 340, height: 340, widths: [340, 640, 1024, 1400] },
   'service-vehicle-transport': { width: 340, height: 340, widths: [340] },
@@ -22,9 +22,9 @@ export const SDL_IMAGES = {
   'industry-technology': { width: 340, height: 340, widths: [340, 640] },
   'industry-automotive': { width: 340, height: 340, widths: [340] },
   'industry-ecommerce': { width: 340, height: 340, widths: [340] },
-  'track-result-vehicle': { width: 340, height: 340, widths: [340] },
+  'track-result-vehicle': { width: 340, height: 340, widths: [340, 640, 1024, 1400] },
   'about-operations': { width: 340, height: 340, widths: [340, 640, 1024, 1400] },
-  'contact-team': { width: 340, height: 340, widths: [340] },
+  'contact-team': { width: 340, height: 340, widths: [340, 640, 1024, 1400] },
   'about-team': { width: 340, height: 340, widths: [340, 640] },
 } satisfies Record<string, SdlImageInfo>;
 

@@ -15,7 +15,7 @@ const MANIFEST_OUT = path.join(ROOT, 'src', 'data', 'sdlImages.ts');
 
 const STEP_WIDTHS = [640, 1024, 1600, 2400];
 // Every card/tile photo is cropped to this exact square so rows line up at the same height.
-// 340 px is the largest square every supplied brand-img file can fill without upscaling.
+// 340 px keeps the smallest sources (the industry photos) from being upscaled.
 const CARD_SIZE = 340;
 // Larger square variants for retina screens, emitted only when the source is big enough.
 const CARD_STEP_SIZES = [640, 1024, 1400];
@@ -183,7 +183,16 @@ async function buildBrand() {
   const mark = await buildMark(LOGO_SRC);
   await webLogo(mark).png(LOGO_PNG).toFile(path.join(BRAND_OUT, 'mark.png'));
   await buildIcons(mark);
-  // og-image.jpg is rebuilt from the new hero photo in a later step; it is not touched here.
+  await buildOgImage(master);
+}
+
+// Social preview (1200x630): the home hero photo with the full-colour logo in the clear sky, top right.
+const OG_W = 1200, OG_H = 630, OG_LOGO_W = 440, OG_PAD = 56;
+async function buildOgImage(master) {
+  const logo = await sharp(master).resize({ width: OG_LOGO_W, kernel: 'lanczos3' }).png().toBuffer();
+  await sharp(path.join(SRC, HERO_SRC)).resize(OG_W, OG_H, { fit: 'cover', position: 'centre' })
+    .composite([{ input: logo, left: OG_W - OG_PAD - OG_LOGO_W, top: OG_PAD }])
+    .jpeg({ quality: 82, mozjpeg: true }).toFile(path.join(BRAND_OUT, 'og-image.jpg'));
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -191,27 +200,31 @@ async function buildBrand() {
 // ---------------------------------------------------------------------------------------------
 // kind 'card' = fixed CARD_SIZE square (plus 640 when the source allows it).
 // kind 'hero' = keeps the given aspect ratio, widths from STEP_WIDTHS up to the source width.
+// Stock photos in free-hd/: sources and licences in images/free-hd/SOURCES.md.
+const HERO_SRC = 'free-hd/hero-home.jpg';
 const PHOTOS = [
-  { name: 'hero-home', src: 'landingimage.png', kind: 'hero', aspect: 16 / 9 },
-  { name: 'hero-home-mobile', src: 'landingimage-mobile.png', kind: 'hero', aspect: 9 / 16 },
-  { name: 'track-hero', src: 'landingimage.png', kind: 'hero', aspect: 2 / 1 },
+  { name: 'hero-home', src: HERO_SRC, kind: 'hero', aspect: 16 / 9 },
+  // Portrait cut of the same photo, framed on the ship.
+  { name: 'hero-home-mobile', src: HERO_SRC, kind: 'hero', aspect: 9 / 16, crop: { left: 830, top: 0, width: 1602, height: 2848 } },
+  { name: 'track-hero', src: 'free-hd/track-hero.jpg', kind: 'hero', aspect: 2 / 1 },
   { name: 'locations-hero', src: 'free-cc0/locations-hero.webp', kind: 'hero', aspect: 2 / 1 },
-  // Wide strip behind the Home callback banner (only the landing image is large enough).
-  { name: 'callback-banner', src: 'landingimage.png', kind: 'hero', aspect: 3 / 1 },
-  // Services and About heroes: two different bands of the landing image until dedicated photos exist.
-  { name: 'services-hero', src: 'landingimage.png', kind: 'hero', aspect: 12 / 5, position: 'top' },
-  { name: 'about-hero', src: 'landingimage.png', kind: 'hero', aspect: 12 / 5, position: 'bottom' },
-  { name: 'service-priority-express', src: 'free-pexels/service-priority-express.jpg', kind: 'card' },
-  { name: 'service-freight-linehaul', src: 'free-pexels/service-freight-linehaul.jpg', kind: 'card' },
+  // Wide strip behind the Home callback banner and the About compliance banner.
+  { name: 'callback-banner', src: 'free-hd/callback-banner.jpg', kind: 'hero', aspect: 3 / 1 },
+  { name: 'services-hero', src: 'free-hd/services-hero.jpg', kind: 'hero', aspect: 12 / 5 },
+  // Band around the ship and the sun.
+  { name: 'about-hero', src: 'free-hd/about-hero.jpg', kind: 'hero', aspect: 12 / 5, crop: { left: 0, top: 560, width: 2738, height: 1141 } },
+  { name: 'service-priority-express', src: 'free-hd/service-priority-express.jpg', kind: 'card' },
+  { name: 'service-freight-linehaul', src: 'free-hd/service-freight-linehaul.jpg', kind: 'card' },
   { name: 'service-vehicle-transport', src: 'free-cc0/service-vehicle-transport.webp', kind: 'card' },
   { name: 'service-secure-vault', src: 'free-cc0/service-secure-vault.webp', kind: 'card' },
   { name: 'industry-healthcare', src: 'site/healthcare-pharma.jpg', kind: 'card' },
   { name: 'industry-technology', src: 'free-cc0/industry-technology.webp', kind: 'card' },
   { name: 'industry-automotive', src: 'site/automotive-parts.jpg', kind: 'card' },
   { name: 'industry-ecommerce', src: 'site/ecommerce-retail.jpg', kind: 'card' },
-  { name: 'track-result-vehicle', src: 'brand-img3.PNG', kind: 'card' },
+  // Shown as a 72 px thumbnail: crop tight on the truck.
+  { name: 'track-result-vehicle', src: 'free-hd/track-result-vehicle.jpg', kind: 'card', crop: { left: 700, top: 1350, width: 2300, height: 2300 } },
   { name: 'about-operations', src: 'free-pexels/about-operations.jpg', kind: 'card' },
-  { name: 'contact-team', src: 'brand-img5.PNG', kind: 'card' },
+  { name: 'contact-team', src: 'free-hd/contact-team.jpg', kind: 'card', crop: { left: 1000, top: 0, width: 3467, height: 3467 } },
   // Shown as a 72 px thumbnail: crop tight on the face.
   { name: 'about-team', src: 'free-pexels/about-team.jpg', kind: 'card', crop: { left: 950, top: 80, width: 900, height: 900 } },
 ];
@@ -248,14 +261,15 @@ async function buildPhotos() {
     } else {
       // Largest crop of the requested aspect that fits the source, then the step widths below it.
       const cropW = Math.min(srcW, Math.floor(srcH * p.aspect));
-      const cropH = Math.round(cropW / p.aspect);
-      const widths = STEP_WIDTHS.filter(w => w <= cropW);
-      if (!widths.includes(cropW) && (widths.length === 0 || cropW - widths[widths.length - 1] > 200)) widths.push(cropW);
+      // Served widths never exceed the largest step, however big the original is.
+      const maxW = Math.min(cropW, STEP_WIDTHS[STEP_WIDTHS.length - 1]);
+      const widths = STEP_WIDTHS.filter(w => w <= maxW);
+      if (!widths.includes(maxW) && (widths.length === 0 || maxW - widths[widths.length - 1] > 200)) widths.push(maxW);
       for (const w of widths) {
         await writeVariants(factory, p.name, w, Math.round(w / p.aspect), p.position);
         variants.push(w);
       }
-      manifest[p.name] = { width: cropW, height: cropH, widths: variants };
+      manifest[p.name] = { width: maxW, height: Math.round(maxW / p.aspect), widths: variants };
     }
   }
   return manifest;

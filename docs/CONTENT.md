@@ -81,7 +81,7 @@ Spelling: International/British English (see BRAND_GUIDE §3).
 ### 2.1 Hero
 - **Badge:** `WORLDWIDE LOGISTICS NETWORK`
 - **H1:** `Fast, Safe,` **`Reliable.`** (the second line takes the accent highlight)
-- **Hero image:** `images/landingimage.png` on web (`hero-home`), `images/landingimage-mobile.png` on phones (`hero-home-mobile`, below 768px)
+- **Hero image:** `images/free-hd/hero-home.jpg` on web (`hero-home`) and a portrait crop of it on phones (`hero-home-mobile`, below 768px)
 - **Sub:** `Express parcels, freight, vehicles and high-value cargo, moved across borders by a team that answers, with one tracking ID from pickup to signed delivery.`
 - **Buttons:** `Get a Rate Quote` (primary) · `Track a Shipment` (ghost)
 - **Inline track field (if present):** placeholder `Enter tracking ID, e.g. WVL7K2M9`, button `Track`
@@ -178,7 +178,7 @@ Remove the invented client logos. Replace with an icon row: **Air Freight · Oce
 ### 2.12 Callback banner
 - **H3:** `Need an urgent collection or a custom rate?`
 - **Body:** `Leave your number and a coordinator will call you back, usually within 30 minutes during business hours.` *("30 minutes" confirmed by the owner 2026-09-28.)*
-- **Background:** `callback-banner` (3:1 crop of `images/landingimage.png`) under the dark overlay
+- **Background:** `callback-banner` (3:1 crop of `images/free-hd/callback-banner.jpg`) under the dark overlay
 - **Fields:** Name · Phone (with country code) · Preferred time
 - **Button:** `Request a Callback`
 - **Success:** **Request received!** `A coordinator will call you shortly. Your reference is WVL-TKT-######.`
@@ -199,7 +199,7 @@ Remove the invented client logos. Replace with an icon row: **Air Freight · Oce
 - **Sub:** `Choose the speed, security and mode that fit your cargo. We'll handle the route, the paperwork and the hand-offs.`
 - **Tier selector heading:** `Choose a service to see how it works`
 - **Hero stat pills** (reuse approved stats from §2.7/§2.9): **5** "Continents served" · **Air · Ocean · Road** "Modes connected" · **8-character** "Tracking ID" · **24/7** "Operations desk"
-- **Hero image:** `services-hero` (12:5 top band of `images/landingimage.png`)
+- **Hero image:** `services-hero` (12:5 crop of `images/free-hd/services-hero.jpg`)
 - **Section eyebrows** (labels added 2026-09-28, owner to confirm): `SERVICE TIERS` · `COMPARE` · `INDUSTRIES` · `ADD-ONS` · `HOW IT WORKS`
 - **Tier panel labels:** `Highlights` · `Service specifications` · buttons `Get a Rate Quote` · `Track a Shipment`
 
@@ -269,7 +269,7 @@ Remove the invented client logos. Replace with an icon row: **Air Freight · Oce
 - **Hero eyebrow:** `ABOUT WVL` · **H1:** `Moving what matters, with nothing hidden.`
 - **Sub:** `World Vexa Logistics connects businesses and people to the world with express, freight and secure transport, and with the one thing logistics often forgets: accountability.`
 
-- **Hero image:** `about-hero` (12:5 bottom band of `images/landingimage.png`). The credentials row shows only the admin "regulatory line" when it is set.
+- **Hero image:** `about-hero` (12:5 crop of `images/free-hd/about-hero.jpg`). The credentials row shows only the admin "regulatory line" when it is set.
 
 **Stat cards** (reuse approved stats; no invented figures): **24/7** "Global operations desk" · `Our desk follows the sun across time zones.` — **1** "Tracking ID from start to finish" · `One team accountable from the first mile to the last.` — **5** "Continents served" · `Gateways across Africa, Europe, the Middle East, Asia and the Americas.` — **Air · Ocean · Road** "Modes connected" · `Air, ocean and road, connected.`
 
@@ -475,32 +475,32 @@ Presented as "gateways we serve". Don't describe them as WVL-owned facilities un
 - *Added 2026-09-29 with 3.12 (owner to confirm):* the Document Center also produces three types not named above, titled `Shipping Label`, `Shipment Receipt` and `Certificate of Cargo Insurance`. Charge lines: `Transport` · `Oversize handling` · `Special handling`, totals `TOTAL DUE` / `TOTAL PAID`. Insurance certificate text: `The cargo described below is insured by {insurer} under policy {policy no.}, subject to that policy's terms, conditions and exclusions.` and claims line `Tell WVL about any loss or damage within 7 days of delivery, quoting the tracking ID above, with photos and proof of value.` (7 days: same [confirm] as Help §8.2). **Proof of Delivery** and **Security Seal Record** have no document type yet (see tracker Blocked).
 
 ## 12. Image alt text
-Approved 2026-09-26. Files are generated into `Public/images/sdl/` by `scripts/optimize-images.mjs`.
-Several of these photos still show the previous brand painted on vehicles (to be replaced with stock photos), so their alt text names no company and describes the scene.
+Approved 2026-09-26, branded photos replaced 2026-10-02. Files are generated into `Public/images/site/` by `scripts/optimize-images.mjs`.
+Every photo is unbranded stock (sources in `images/*/SOURCES.md`); alt text describes the scene and names no company.
 
 | Image (slot) | Source | Alt |
 |---|---|---|
-| hero-home / hero-home-mobile | images/landingimage(-mobile).png | Truck at a container port at sunset, with a cargo ship, cranes and an aircraft overhead |
-| callback-banner | images/landingimage.png (3:1 crop) | (decorative background behind the callback form, empty alt) |
-| services-hero | images/landingimage.png (12:5, top band) | Aircraft taking off over port cranes and container stacks at sunset |
-| about-hero | images/landingimage.png (12:5, bottom band) | Truck and container ship on the quay at sunset |
-| track-hero | images/landingimage.png (2:1 crop) | Truck, cargo ship and aircraft at a container port at sunset |
+| hero-home / hero-home-mobile | images/free-hd/hero-home.jpg (16:9; 9:16 crop on phones) | Container ship leaving a harbour at sunset, with dockside cranes and a container terminal behind |
+| callback-banner | images/free-hd/callback-banner.jpg (3:1 crop) | (decorative background behind the callback form, empty alt) |
+| services-hero | images/free-hd/services-hero.jpg (12:5) | Airliner silhouetted against a fiery sunset sky |
+| about-hero | images/free-hd/about-hero.jpg (12:5) | Cargo ship silhouetted on the sea at sunset |
+| track-hero | images/free-hd/track-hero.jpg (2:1) | Port cranes silhouetted against the setting sun |
 | locations-hero | images/free-cc0/locations-hero.webp | Aerial view of rows of shipping containers at a port terminal |
-| service-priority-express | images/free-pexels/service-priority-express.jpg | Ground crew raising a cargo pallet to the hold door of a wide-body aircraft |
-| service-freight-linehaul | images/free-pexels/service-freight-linehaul.jpg | Dock workers on a container ship deck as gantry cranes load stacked containers |
+| service-priority-express | images/free-hd/service-priority-express.jpg | Jet engine of a parked aircraft, seen between air cargo containers on the apron |
+| service-freight-linehaul | images/free-hd/service-freight-linehaul.jpg | Aerial view of a cargo ship at berth under a gantry crane, with containers on the quay |
 | service-vehicle-transport | images/free-cc0/service-vehicle-transport.webp | Roll-on/roll-off vehicle carrier ship berthed at a harbour quay |
 | service-secure-vault | images/free-cc0/service-secure-vault.webp | Close-up of the combination lock on a metal security case |
 | industry-healthcare | images/site/healthcare-pharma.jpg | Worker in gloves and a clean-room gown carrying sealed boxes |
 | industry-technology | images/free-cc0/industry-technology.webp | Server rack with network cables and status lights |
 | industry-automotive | images/site/automotive-parts.jpg | Mechanic working on a car engine with a spanner |
 | industry-ecommerce | images/site/ecommerce-retail.jpg | Online seller packing parcels next to a laptop |
-| track-result-vehicle | images/brand-img3.PNG | Two trucks travelling along a highway at sunset |
+| track-result-vehicle | images/free-hd/track-result-vehicle.jpg (cropped) | Truck and trailer on a highway at dusk |
 | about-operations | images/free-pexels/about-operations.jpg | Warehouse staff member checking stock on a tablet between loaded pallet racks |
 | about-team | images/free-pexels/about-team.jpg (cropped) | Smiling support coordinator wearing a headset |
-| contact-team | images/brand-img5.PNG | Team member carrying a backpack at an airport cargo area |
-| og-image | images/landingimage.png | (social preview, no alt needed) |
+| contact-team | images/free-hd/contact-team.jpg (cropped; not placed on a page yet) | Warehouse worker checking stock with a tablet and a handheld scanner |
+| og-image | images/free-hd/hero-home.jpg + logo | (social preview, no alt needed) |
 
-Not used yet: `brand-img6`, `brand-img8` (marketing text baked into the image). `hero-globe-fallback` is produced in Prompt 24 from the 3D globe.
+`hero-globe-fallback` is produced in Prompt 24 from the 3D globe.
 
 ## 13. Legal pages: structure (plain-language draft; **lawyer review required before launch**)
 Tabs: **Privacy Policy · Terms of Service · Shipping Terms · Cookie Policy · Accessibility**

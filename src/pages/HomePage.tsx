@@ -54,14 +54,14 @@ const SERVICES: { title: string; body: string; cta: string; image: SdlImageName;
     body: 'Time-critical documents and parcels, door to door, with the fastest available routing and customs pre-clearance where possible.',
     cta: 'Explore Express',
     image: 'service-priority-express',
-    alt: 'Ground crew raising a cargo pallet to the hold door of a wide-body aircraft'
+    alt: 'Jet engine of a parked aircraft, seen between air cargo containers on the apron'
   },
   {
     title: 'Scheduled Freight & Linehaul',
     body: 'Air, ocean (FCL and LCL) and road freight on fixed departures, for regular volumes that need predictable transit times.',
     cta: 'Explore Freight',
     image: 'service-freight-linehaul',
-    alt: 'Dock workers on a container ship deck as gantry cranes load stacked containers'
+    alt: 'Aerial view of a cargo ship at berth under a gantry crane, with containers on the quay'
   },
   {
     title: 'Vehicle Shipping & Transport',
@@ -255,7 +255,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onTrack, onNavigate }) => {
         <ResponsiveImage
           name="hero-home"
           mobileName="hero-home-mobile"
-          alt="Truck at a container port at sunset, with a cargo ship, cranes and an aircraft overhead"
+          alt="Container ship leaving a harbour at sunset, with dockside cranes and a container terminal behind"
           eager
           sizes="100vw"
           className="corp-hero-media"

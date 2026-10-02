@@ -200,7 +200,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onNavigate, initialS
       <section className="services-hero-section">
         <ResponsiveImage
           name="services-hero"
-          alt="Aircraft taking off over port cranes and container stacks at sunset"
+          alt="Airliner silhouetted against a fiery sunset sky"
           eager
           sizes="100vw"
           className="services-hero-media"
