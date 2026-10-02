@@ -76,7 +76,7 @@ if (!process.env.ADMIN_PROXY_TARGET && !fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir, { recursive: true });
 }
 
-// The site starts with a fresh database (DEPLOYMENT.md §4), so a database file left over from
+// The site starts with a fresh database (DEPLOYMENT.md, intro), so a database file left over from
 // before the re-launch is never opened or migrated. Say so at startup, so it isn't mistaken for
 // live data.
 if (!process.env.ADMIN_PROXY_TARGET) {

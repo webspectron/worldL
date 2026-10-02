@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { ADMIN_HOST, SITE_URL } from '../src/config/brand.js';
 
 // robots.txt, sitemap.xml and crawler headers (tracker 6.4). The public site and the admin
-// console are the same Node app on two hostnames (DEPLOYMENT §5), so every answer here depends
+// console are the same Node app on two hostnames (DEPLOYMENT §3.3), so every answer here depends
 // on which host asked. The admin host is never listed anywhere a crawler can read it.
 
 // ADMIN_PROXY_TARGET marks a deployment that serves only the admin host (see index.ts).

@@ -20,7 +20,7 @@ Audit taken from the `duolingo-express` repo on 2026-09-26. When you work throug
 | `Duolingo Logistics Intake` | `SDL Intake Desk` | CreateShipmentView.tsx:1151 default sender. *Done: `INTAKE_DESK` in brand.ts.* |
 | `duolingoexpress.com` | `sdlgloballogistics.com` | |
 | `dispatch@duolingoexpress.com` | `info@sdlgloballogistics.com` | server/db.ts default settings, Header, Contact, PublicQuoteResult, Admin Settings, AdminLayout |
-| `duolingo_express.db` | `sdl_global.db` | server/db.ts, server/index.ts, .env.example (see DEPLOYMENT §4) |
+| `duolingo_express.db` | `sdl_global.db` | server/db.ts, server/index.ts, .env.example (see DEPLOYMENT §3.2) |
 | `duolingo-express` (package name) | `sdl-global-logistics` | package.json + regenerate package-lock.json |
 | `Duolingo Express Waterproof (Legal) Pouch` | `SDL Tamper-Evident Document Pouch` | CreateShipmentView.tsx |
 | `Duolingo Express Commercial Linehaul Highway Hauler` | `SDL Freight Vehicle` (image alt) | TrackResultPage.tsx:616 |
@@ -139,7 +139,7 @@ grep -rli "duolingo" dist dist-server
 | Hit | Why it's allowed |
 |---|---|
 | `server/db.ts:9`, `:11` (`OLD_BRAND_SETTINGS`), and the same strings in `dist-server/server/db.js` | Startup migration: finds the old seed's company name and email in an existing `settings` table and rewrites them to SDL values. It has to know the old values to match them. Nothing old is shown to users. |
-| `server/db.ts:31` (`LEGACY_DB_FILE`), and `dist-server/server/db.js` | Only used to warn at startup that an old database file is present and ignored (DEPLOYMENT §4). |
+| `server/db.ts:31` (`LEGACY_DB_FILE`), and `dist-server/server/db.js` | Only used to warn at startup that an old database file is present and ignored (DEPLOYMENT intro: fresh database). |
 | `scripts/trackingId.test.ts:56`, `:75`; `scripts/references.test.ts:43` | Negative tests: they assert that old `DXP-` IDs are rejected and that generated references contain no old-brand text. Not part of the build. |
 | `CLAUDE.md`, `PROMPTS.md`, `docs/*.md` | Rebrand documentation that has to name the old strings to describe the job. Internal only; not in `dist/`. Review before the repo goes public. |
 | Binary files: `Public/brand/og-image.jpg`, `Public/images/sdl/hero-home-1024.jpg`, `Public/images/sdl/track-hero-1024.webp`, `Public/images/sdl/about-hero-1024.webp` (and their `dist/` copies), `images/free-cc0/locations-hero.webp`, `images/landingimage.png` | False positives: `dxp` matched random bytes in compressed image data (e.g. `LdXP`, `DXP` between binary bytes). No text metadata. |
