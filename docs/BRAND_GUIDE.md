@@ -1,6 +1,6 @@
-# SDL Global Logistics — Brand Guide
+# World Vexa Logistics — Brand Guide
 
-> **Context:** The SDL platform is **already built and working**: public website, tracking engine, Express/SQLite API,
+> **Context:** The WVL platform is **already built and working**: public website, tracking engine, Express/SQLite API,
 > admin console, documents and quotes. Claude is acting as a **senior professional developer** who has taken over this
 > existing codebase to rebrand and improve it. Nothing here is built from scratch; every task modifies the working system
 > in place and must leave it working. See `CLAUDE.md §0`.
@@ -11,16 +11,16 @@
 
 | Context | Use |
 |---|---|
-| Legal line, invoices, terms, footer copyright | **SDL Global Logistics Ltd** |
-| First mention on a page, titles, meta | **SDL Global Logistics** |
-| Repeated mentions, buttons, UI labels | **SDL** |
-| Never | "SDL Logistics", "S.D.L.", "Sdl", "SDL Global" on its own |
+| Legal line, invoices, terms, footer copyright | **World Vexa Logistics** |
+| First mention on a page, titles, meta | **World Vexa Logistics** |
+| Repeated mentions, buttons, UI labels | **WVL** |
+| Never | "Vexa Logistics", "W.V.L.", "Wvl", "World Vexa" on its own |
 
-Copyright line: `© {currentYear} SDL Global Logistics Ltd. All rights reserved.` (year computed, not hard-coded).
+Copyright line: `© {currentYear} World Vexa Logistics. All rights reserved.` (year computed, not hard-coded).
 
 ## 2. Positioning
 
-**One line:** SDL Global Logistics moves time-critical and high-value cargo across borders, with one tracking number
+**One line:** World Vexa Logistics moves time-critical and high-value cargo across borders, with one tracking number
 and one accountable team from pickup to proof of delivery.
 
 **Tagline (primary):** *Fast, Safe, Reliable.* (as printed on the logo; owner decision 2026-09-26)
@@ -46,7 +46,7 @@ and one accountable team from pickup to proof of delivery.
 
 ## 4. Colour — derived from the logo
 
-The palette must be built from the SDL logo. **Process (Phase 1, task 1.2):**
+The palette must be built from the logo. **Process (Phase 1, task 1.2):**
 
 1. Put the logo at `Public/brand/sdl-logo.svg` (or high-res PNG).
 2. Sample the logo's colours (SVG fill values, or a quick script using `sharp`'s `stats()` / dominant colour on the PNG).
@@ -126,33 +126,33 @@ Keep the current, well-performing trio (already loaded in `index.html`) unless t
 
 ## 7. Tracking ID and other identifiers
 
-**Tracking ID (8 characters exactly):** `DLS` + 5 characters from the safe alphabet.
+**Tracking ID (8 characters exactly):** `WVL` + 5 characters from the safe alphabet.
 
 ```
-Format:    DLS + [5 chars]           e.g. DLS7K2M9, DLSQ4X8T
+Format:    WVL + [5 chars]           e.g. WVL7K2M9, WVLQ4X8T
 Alphabet:  23456789ABCDEFGHJKLMNPQRSTUVWXYZ   (no 0/O, 1/I, to avoid misreading)
 Capacity:  32^5 = 33,554,432 unique IDs
-Regex:     ^DLS[2-9A-HJ-NP-Z]{5}$
-Input:     trim, uppercase, strip spaces and dashes before validating ("dls 7k2-m9" → DLS7K2M9)
+Regex:     ^WVL[2-9A-HJ-NP-Z]{5}$
+Input:     trim, uppercase, strip spaces and dashes before validating ("wvl 7k2-m9" → WVL7K2M9)
 ```
 
 - Generate with `crypto.getRandomValues` (client) / `crypto.randomInt` (server). **The server is the authority:**
   check uniqueness against the DB and retry on collision.
 - Put it in one shared module, e.g. `src/shared/trackingId.ts`, imported by the server and the client (the server
   tsconfig must include it).
-- **Multi-piece child labels:** base ID + piece suffix, e.g. `DLS7K2M9-01`, `DLS7K2M9-02`. The tracking ID
+- **Multi-piece child labels:** base ID + piece suffix, e.g. `WVL7K2M9-01`, `WVL7K2M9-02`. The tracking ID
   itself stays 8 characters, and a search for a child label resolves to the parent.
-- **Returns:** a return gets its own new DLS ID and is linked to the original (no `RTO-` prefix).
+- **Returns:** a return gets its own new WVL ID and is linked to the original (no `RTO-` prefix).
 
 **Other references** (not tracking IDs, so they're not bound by the 8-character rule):
 
 | Old | New | Example |
 |---|---|---|
-| `DXP-SEAL-######` | `SDL-SL-######` | SDL-SL-892401 |
-| `DXP-SPT-#####` / `DXP-TKT-######` | `SDL-TKT-######` | SDL-TKT-418230 |
-| `DXP-CORP-PAY-####` | `SDL-INV-######` | SDL-INV-004091 |
-| `DXP-AUTOGEN-REGISTER` | `DLS·····` placeholder | shown before the ID is generated |
-| `DXP SECURE LINEHAUL` badge | `SDL SECURE VAULT` | |
+| `DXP-SEAL-######` | `WVL-SL-######` | WVL-SL-892401 |
+| `DXP-SPT-#####` / `DXP-TKT-######` | `WVL-TKT-######` | WVL-TKT-418230 |
+| `DXP-CORP-PAY-####` | `WVL-INV-######` | WVL-INV-004091 |
+| `DXP-AUTOGEN-REGISTER` | `WVL·····` placeholder | shown before the ID is generated |
+| `DXP SECURE LINEHAUL` badge | `WVL SECURE VAULT` | |
 
 ## 8. Imagery
 

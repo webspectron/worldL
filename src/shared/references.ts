@@ -1,18 +1,18 @@
-// Non-tracking reference numbers (BRAND_GUIDE §7): a prefix plus 6 digits, e.g. SDL-SL-892401.
+// Non-tracking reference numbers (BRAND_GUIDE §7): a prefix plus 6 digits, e.g. WVL-SL-892401.
 // They aren't tracking IDs, so they're not bound by the 8-character rule. Shared by the browser
 // and the server.
 
 export const REFERENCE_PREFIXES = {
-  seal: 'SDL-SL-',
-  ticket: 'SDL-TKT-',
-  invoice: 'SDL-INV-',
+  seal: 'WVL-SL-',
+  ticket: 'WVL-TKT-',
+  invoice: 'WVL-INV-',
 } as const;
 
 export type ReferenceKind = keyof typeof REFERENCE_PREFIXES;
 
-export const REFERENCE_PATTERN = /^SDL-(SL|TKT|INV)-\d{6}$/;
+export const REFERENCE_PATTERN = /^WVL-(SL|TKT|INV)-\d{6}$/;
 
-// 6 random digits (leading zeros allowed, as in SDL-INV-004091). Rejection sampling keeps
+// 6 random digits (leading zeros allowed, as in WVL-INV-004091). Rejection sampling keeps
 // every value equally likely.
 export function generateReference(kind: ReferenceKind): string {
   const buf = new Uint32Array(1);

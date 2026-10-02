@@ -1,5 +1,5 @@
-// Global gateway network (docs/CONTENT.md §9). These are gateways SDL serves,
-// not SDL-owned facilities. The list is pending the owner's confirmation.
+// Global gateway network (docs/CONTENT.md §9). These are gateways we serve,
+// not facilities we own. The list is pending the owner's confirmation.
 
 export type TransportMode = 'Air' | 'Ocean' | 'Road';
 

@@ -3,6 +3,7 @@ import { db } from '../db.js';
 import { syncTimeBasedProgress, shipmentTransportMode } from '../progress.js';
 import { eventTimeDisplay } from '../../src/shared/timeZones.js';
 import { parseTrackingInput } from '../../src/shared/trackingId.js';
+import { EXAMPLE_TRACKING_ID, TRACKING_PREFIX } from '../../src/config/brand.js';
 
 export const trackRouter = Router();
 
@@ -51,11 +52,11 @@ function maskEmail(email: string): string | undefined {
 // GET /api/track/:trackingNumber (Public tracking with PII protection)
 trackRouter.get('/:trackingNumber', (req: Request, res: Response) => {
   try {
-    // Normalise first ("dls 7k2-m9" -> DLS7K2M9; a child label such as DLS7K2M9-01 resolves to
-    // its parent), and reject anything that can't be an SDL tracking ID before touching the DB.
+    // Normalise first ("wvl 7k2-m9" -> WVL7K2M9; a child label such as WVL7K2M9-01 resolves to
+    // its parent), and reject anything that can't be a tracking ID before touching the DB.
     const parsed = parseTrackingInput(req.params.trackingNumber as string);
     if (!parsed) {
-      return res.status(400).json({ success: false, error: 'Tracking IDs are 8 characters, starting with DLS (for example DLS7K2M9).' });
+      return res.status(400).json({ success: false, error: `Tracking IDs are 8 characters, starting with ${TRACKING_PREFIX} (for example ${EXAMPLE_TRACKING_ID}).` });
     }
     const tracking = parsed.trackingId;
     const row = db.prepare('SELECT * FROM shipments WHERE tracking_number = ? AND deleted_at_ts IS NULL').get(tracking) as any;

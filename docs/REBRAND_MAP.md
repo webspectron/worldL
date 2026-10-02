@@ -157,3 +157,15 @@ grep -rli "duolingo" dist dist-server
 | `nationwide\|interstate`: 64 lines in `src/` (pages 46, services 10, components 5, admin 3) | 2.2–2.4 (services, `USJourneyMap`), 3.2–3.13 (page copy) |
 | S2 `USA\|United States\|U.S.\|1-800\|555-01`: 84 lines in `src/` | 2.1 (hub data, including the fake `1-800-555-0199` facility phones in `FacilityNetworkMap` and `LocationsPage`), 2.6 (address forms and defaults), 3.x (copy), 3.12 (documents print "USA") |
 | `(212) 555-01xx` pet/vet presets in `CreateShipmentView.tsx`, `DocumentCenterView.tsx:428` sender-phone fallback | 3.12 (admin and document defaults). 555-01xx is the reserved fictional range, so these are not real numbers. |
+
+---
+
+## Re-launch: SDL Global Logistics → World Vexa Logistics (started 2026-10-02)
+
+- [x] Name, short name, legal name, email, domain, tracking/reference prefixes (`brand.ts`, `references.ts`). Prompt 2.
+- [x] Visible copy, meta tags, JSON-LD, manifest, legal text, document footer/pouch line, API health name, start log. Prompt 2.
+- [x] package name `world-vexa-logistics`, DB file `app.db`, session cookie `admin.sid`. Prompt 2.
+- [ ] Logo files (`/brand/sdl-*.png`, JSON-LD logo, favicon set) and the photo folder `/images/sdl/`. Prompt 3.
+- [ ] Photos showing the old livery, their alt text, and `og-image.jpg`. Prompt 4.
+- [ ] Browser-storage keys `sdl_*` listed in the Cookie Policy (tracker Blocked #48).
+- [ ] Final sweep of source and build output. Prompt 6.

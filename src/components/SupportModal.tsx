@@ -3,6 +3,7 @@ import { Headphones, X, CheckCircle, Send } from 'lucide-react';
 import './SupportModal.css';
 import { api } from '../services/api';
 import { useEscapeKey } from '../utils/useEscapeKey';
+import { EXAMPLE_TRACKING_ID } from '../config/brand';
 
 // CONTENT §6.4
 export const SUPPORT_ISSUE_TYPES = ['Delay', 'Address change', 'Damage', 'Customs question', 'Other'] as const;
@@ -28,7 +29,7 @@ export const SupportModal: React.FC<SupportModalProps> = ({
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
-  // The server's ticket reference (SDL-TKT-######) and the values it was opened with.
+  // The server's ticket reference (WVL-TKT-######) and the values it was opened with.
   const [ticket, setTicket] = useState<{ id: string; trackingNumber: string; email: string } | null>(null);
 
   // Each opening starts from the shipment it was opened for.
@@ -112,7 +113,7 @@ export const SupportModal: React.FC<SupportModalProps> = ({
                   type="text"
                   value={trackingNumber}
                   onChange={(e) => setTrackingNumber(e.target.value)}
-                  placeholder="e.g. DLS7K2M9"
+                  placeholder={`e.g. ${EXAMPLE_TRACKING_ID}`}
                   className="sdl-input font-mono"
                 />
               </div>
