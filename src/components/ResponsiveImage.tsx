@@ -19,7 +19,7 @@ interface ResponsiveImageProps {
 const MOBILE_QUERY = '(max-width: 767px)';
 
 function srcSet(name: SdlImageName, ext: 'webp' | 'jpg'): string {
-  return SDL_IMAGES[name].widths.map(w => `/images/sdl/${name}-${w}.${ext} ${w}w`).join(', ');
+  return SDL_IMAGES[name].widths.map(w => `/images/site/${name}-${w}.${ext} ${w}w`).join(', ');
 }
 
 function largest(name: SdlImageName): number {
@@ -55,7 +55,7 @@ export const ResponsiveImage: React.FC<ResponsiveImageProps> = ({
       <source type="image/webp" srcSet={srcSet(name, 'webp')} sizes={sizes} />
       <img
         className={`sdl-responsive-image ${imgClassName}`.trim()}
-        src={`/images/sdl/${name}-${largest(name)}.jpg`}
+        src={`/images/site/${name}-${largest(name)}.jpg`}
         srcSet={srcSet(name, 'jpg')}
         sizes={sizes}
         width={info.width}

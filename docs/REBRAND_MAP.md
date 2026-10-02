@@ -165,7 +165,7 @@ grep -rli "duolingo" dist dist-server
 - [x] Name, short name, legal name, email, domain, tracking/reference prefixes (`brand.ts`, `references.ts`). Prompt 2.
 - [x] Visible copy, meta tags, JSON-LD, manifest, legal text, document footer/pouch line, API health name, start log. Prompt 2.
 - [x] package name `world-vexa-logistics`, DB file `app.db`, session cookie `admin.sid`. Prompt 2.
-- [ ] Logo files (`/brand/sdl-*.png`, JSON-LD logo, favicon set) and the photo folder `/images/sdl/`. Prompt 3.
+- [x] Logo files (`/brand/logo.png`, `logo-white.png`, `mark.png`; `sdl-*.png` deleted), JSON-LD logo, favicon set (`?v=4`) and the photo folder `/images/sdl/` → `/images/site/`. Prompt 3.
 - [ ] Photos showing the old livery, their alt text, and `og-image.jpg`. Prompt 4.
 - [ ] Browser-storage keys `sdl_*` listed in the Cookie Policy (tracker Blocked #48).
 - [ ] Final sweep of source and build output. Prompt 6.

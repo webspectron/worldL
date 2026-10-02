@@ -1,8 +1,8 @@
 // Prepares brand assets and responsive photos from the untouched originals in images/.
 // Run with: node scripts/optimize-images.mjs            (everything)
 //           node scripts/optimize-images.mjs --icons    (favicon and app icons only)
-// Outputs: Public/brand/* (logos, icons, OG image) and Public/images/sdl/* (WebP + JPG per width),
-// plus src/data/sdlImages.ts (the manifest <ResponsiveImage> reads).
+// Outputs: Public/brand/* (logos and icons), images/logo-master.png (clean transparent logo),
+// Public/images/site/* (WebP + JPG per width) and src/data/sdlImages.ts (the manifest <ResponsiveImage> reads).
 import sharp from 'sharp';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -10,7 +10,7 @@ import path from 'node:path';
 const ROOT = process.cwd();
 const SRC = path.join(ROOT, 'images');
 const BRAND_OUT = path.join(ROOT, 'Public', 'brand');
-const PHOTO_OUT = path.join(ROOT, 'Public', 'images', 'sdl');
+const PHOTO_OUT = path.join(ROOT, 'Public', 'images', 'site');
 const MANIFEST_OUT = path.join(ROOT, 'src', 'data', 'sdlImages.ts');
 
 const STEP_WIDTHS = [640, 1024, 1600, 2400];
@@ -24,19 +24,26 @@ fs.mkdirSync(BRAND_OUT, { recursive: true });
 fs.mkdirSync(PHOTO_OUT, { recursive: true });
 
 // ---------------------------------------------------------------------------------------------
-// Logo: the supplied logo is a JPEG on white. "Colour to alpha" against white keeps the
-// anti-aliased edges smooth instead of leaving a white fringe.
+// Logo: the supplied PNG has no real alpha. A grey/white checkerboard (~236 and ~254) is painted
+// behind the artwork, and the globe's "ocean" and the keylines around the globe and parcel are
+// the same light neutrals. The artwork itself is only red and black ink, so every light neutral
+// pixel is background. Alpha comes from each pixel's "whiteness" (its lowest channel): red and
+// black ink sit far below LOGO_INK, the checkerboard sits at or above LOGO_PAPER. Edge pixels in
+// between are un-blended from white so anti-aliased edges keep their true colour (no grey fringe).
 // ---------------------------------------------------------------------------------------------
-async function whiteToAlpha(input) {
+const LOGO_SRC = path.join(SRC, 'World Vexa Logistics Logo.png');
+const LOGO_INK = 96; // at or below this whiteness a pixel is fully opaque
+const LOGO_PAPER = 222; // at or above this it is background (the darker checker squares are ~233)
+const SPECK_MAX = 24; // isolated faint blobs up to this many pixels are leftover noise
+
+async function cleanLogo(input) {
   const { data, info } = await sharp(input).removeAlpha().raw().toBuffer({ resolveWithObject: true });
-  const out = Buffer.alloc(info.width * info.height * 4);
-  const LOW = 190; // at or below this "whiteness" a pixel is fully opaque
-  const HIGH = 238; // at or above this it is background (JPEG noise keeps the paper at ~240-255)
+  const { width, height } = info;
+  const out = Buffer.alloc(width * height * 4);
   for (let i = 0, j = 0; i < data.length; i += 3, j += 4) {
     const r = data[i], g = data[i + 1], b = data[i + 2];
     const whiteness = Math.min(r, g, b);
-    let a = whiteness <= LOW ? 1 : 1 - (whiteness - LOW) / (HIGH - LOW);
-    a = Math.max(0, Math.min(1, a));
+    const a = whiteness <= LOGO_INK ? 1 : whiteness >= LOGO_PAPER ? 0 : (LOGO_PAPER - whiteness) / (LOGO_PAPER - LOGO_INK);
     if (a > 0) {
       // Un-blend from white so edge pixels keep their true colour.
       out[j] = Math.max(0, Math.min(255, Math.round((r - 255 * (1 - a)) / a)));
@@ -45,7 +52,32 @@ async function whiteToAlpha(input) {
     }
     out[j + 3] = Math.round(a * 255);
   }
-  return sharp(out, { raw: { width: info.width, height: info.height, channels: 4 } }).png().toBuffer();
+  despeckle(out, width, height);
+  return sharp(out, { raw: { width, height, channels: 4 } }).png().toBuffer();
+}
+
+// Clears small connected blobs of non-zero alpha that are not part of the artwork.
+function despeckle(rgba, width, height) {
+  const seen = new Uint8Array(width * height);
+  const stack = [];
+  for (let start = 0; start < width * height; start++) {
+    if (seen[start] || rgba[start * 4 + 3] === 0) continue;
+    const blob = [];
+    stack.push(start);
+    seen[start] = 1;
+    while (stack.length) {
+      const p = stack.pop();
+      blob.push(p);
+      const x = p % width, y = (p - x) / width;
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const nx = x + dx, ny = y + dy;
+        if (nx < 0 || ny < 0 || nx >= width || ny >= height) continue;
+        const q = ny * width + nx;
+        if (!seen[q] && rgba[q * 4 + 3] > 0) { seen[q] = 1; stack.push(q); }
+      }
+    }
+    if (blob.length <= SPECK_MAX) for (const p of blob) rgba[p * 4 + 3] = 0;
+  }
 }
 
 // How strongly a pixel reads as the logo's red (0 = neutral grey/black/white).
@@ -63,7 +95,7 @@ async function toWhiteVersion(pngBuffer) {
   return sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } }).png().toBuffer();
 }
 
-// Keeps only the red parts of an image (the globe, arrow and parcel of the mark).
+// Keeps only the red parts of an image (the globe, orbit arrow and parcel of the mark).
 async function redOnly(pngBuffer) {
   const { data, info } = await sharp(pngBuffer).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   for (let i = 0; i < data.length; i += 4) {
@@ -74,72 +106,84 @@ async function redOnly(pngBuffer) {
   return sharp(data, { raw: { width: info.width, height: info.height, channels: 4 } }).png().toBuffer();
 }
 
-// Icon mark: the red globe, arrow and parcel that form the "D", without the black letterforms
-// behind them, centred on a transparent square. Crop box measured on the 1170x626 original
-// (includes the arrow tip over the "L").
-async function buildSquareMark(transparent) {
-  const MARK = { left: 538, top: 95, width: 372, height: 250 };
-  const markRed = await redOnly(await sharp(transparent).extract(MARK).png().toBuffer());
-  const mark = await sharp(markRed).trim({ threshold: 1 }).png().toBuffer();
-  const markMeta = await sharp(mark).metadata();
-  const side = Math.max(markMeta.width, markMeta.height);
-  return sharp(mark)
+// Centres an image on a transparent square canvas.
+async function toSquare(pngBuffer) {
+  const meta = await sharp(pngBuffer).metadata();
+  const side = Math.max(meta.width, meta.height);
+  return sharp(pngBuffer)
     .extend({
-      top: Math.floor((side - markMeta.height) / 2), bottom: Math.ceil((side - markMeta.height) / 2),
-      left: Math.floor((side - markMeta.width) / 2), right: Math.ceil((side - markMeta.width) / 2),
+      top: Math.floor((side - meta.height) / 2), bottom: Math.ceil((side - meta.height) / 2),
+      left: Math.floor((side - meta.width) / 2), right: Math.ceil((side - meta.width) / 2),
       background: { r: 0, g: 0, b: 0, alpha: 0 },
     })
     .png().toBuffer();
 }
 
-// Browser, home-screen and PWA icons, all rendered straight from the square mark at their exact
-// size (never resized from another icon). `inset` is the share of the canvas the mark may fill.
+// The "WV" + globe/parcel symbol: the top band of the logo, without the speed lines on the left
+// and the wordmark below. Measured on the 2024x777 source: empty columns 392-396 separate the
+// speed lines from the W, empty rows 415-436 separate the symbol from "WORLD".
+const MARK_BOX = { left: 394, top: 0, width: 2024 - 394, height: 426 };
+async function buildMark(source) {
+  const clean = await cleanLogo(source);
+  return sharp(await sharp(clean).extract(MARK_BOX).png().toBuffer()).trim({ threshold: 1 }).png().toBuffer();
+}
+
+// The globe, orbit arrow and parcel alone (the red parts of the mark), squared. The full "WV"
+// mark is about 4:1, so in a square tab icon it would be ~4 px tall at 16 px; tiny icons use this.
+async function buildGlobe(mark) {
+  return toSquare(await sharp(await redOnly(mark)).trim({ threshold: 1 }).png().toBuffer());
+}
+
+// Browser, home-screen and PWA icons, all rendered from the mark at their exact size (never
+// resized from another icon). `inset` is the share of the canvas width the artwork may fill;
+// `art` picks the full "WV" mark or its globe/parcel. The mark has black letterforms that vanish
+// on dark launchers and tabs, so every icon sits on white (a rounded tile where the OS doesn't
+// mask the icon itself).
 const CLEAR = { r: 0, g: 0, b: 0, alpha: 0 };
 const ICONS = [
-  // Tab icons sit on a white rounded tile so the red mark stays visible on dark browser tabs.
-  { file: 'favicon-16.png', size: 16, inset: 1, bg: '#ffffff', tile: true },  // browser tab (standard DPI)
-  { file: 'favicon-32.png', size: 32, inset: 0.94, bg: '#ffffff', tile: true }, // browser tab (retina), taskbar
-  { file: 'icon-192.png', size: 192, inset: 0.92, bg: CLEAR },        // Android home screen, manifest
-  { file: 'favicon.png', size: 512, inset: 0.92, bg: CLEAR },         // manifest, install splash
-  { file: 'icon-maskable-512.png', size: 512, inset: 0.64, bg: '#ffffff' }, // Android adaptive: fits the 80% safe circle
-  { file: 'apple-touch-icon.png', size: 180, inset: 0.76, bg: '#ffffff' },  // iOS fills transparency with black, so white
+  { file: 'favicon-16.png', size: 16, inset: 1, art: 'globe', tile: true },     // browser tab (standard DPI)
+  { file: 'favicon-32.png', size: 32, inset: 0.94, art: 'globe', tile: true },  // browser tab (retina), taskbar
+  { file: 'icon-192.png', size: 192, inset: 0.86, art: 'mark', tile: true },    // Android home screen, manifest
+  { file: 'favicon.png', size: 512, inset: 0.86, art: 'mark', tile: true },     // manifest, install splash
+  { file: 'icon-maskable-512.png', size: 512, inset: 0.76, art: 'mark' },       // Android adaptive: fits the 80% safe circle
+  { file: 'apple-touch-icon.png', size: 180, inset: 0.84, art: 'mark' },        // iOS fills transparency with black, so white
 ];
 
-async function buildIcons(squareMark) {
-  for (const { file, size, inset, bg, tile } of ICONS) {
+async function buildIcons(mark) {
+  const sources = { mark: await toSquare(mark), globe: await buildGlobe(mark) };
+  for (const { file, size, inset, art, tile } of ICONS) {
     const inner = Math.round(size * inset);
     const edge = size - inner;
-    let icon = sharp(squareMark)
+    const artwork = await sharp(sources[art])
       .resize(inner, inner, { fit: 'contain', background: CLEAR, kernel: 'lanczos3' })
-      .extend({ top: Math.floor(edge / 2), bottom: Math.ceil(edge / 2), left: Math.floor(edge / 2), right: Math.ceil(edge / 2), background: CLEAR });
-    if (tile) {
-      const r = Math.round(size * 0.22);
-      const card = Buffer.from(`<svg width="${size}" height="${size}"><rect width="${size}" height="${size}" rx="${r}" fill="${bg}"/></svg>`);
-      icon = sharp(card).composite([{ input: await icon.png().toBuffer() }]);
-    } else if (bg !== CLEAR) {
-      icon = sharp(await icon.png().toBuffer()).flatten({ background: bg });
-    }
+      .extend({ top: Math.floor(edge / 2), bottom: Math.ceil(edge / 2), left: Math.floor(edge / 2), right: Math.ceil(edge / 2), background: CLEAR })
+      .png().toBuffer();
+    const r = tile ? Math.round(size * 0.22) : 0;
+    const card = Buffer.from(`<svg width="${size}" height="${size}"><rect width="${size}" height="${size}" rx="${r}" fill="#ffffff"/></svg>`);
+    const icon = sharp(card).composite([{ input: artwork }]);
     // Full-colour PNG for the tiny sizes: palette quantising visibly bands 16/32 px edges.
     const png = size <= 32 ? { compressionLevel: 9 } : { palette: true, quality: 95, effort: 10, compressionLevel: 9 };
     await icon.png(png).toFile(path.join(BRAND_OUT, file));
   }
 }
 
+const LOGO_PNG = { palette: true, quality: 90, effort: 10, compressionLevel: 9 };
+// Web copies are capped at this width: the largest slot (print header, 88 px tall) still gets 3x.
+const LOGO_WEB_WIDTH = 1200;
+const webLogo = buf => sharp(buf).resize({ width: LOGO_WEB_WIDTH, withoutEnlargement: true, kernel: 'lanczos3' });
+
 async function buildBrand() {
-  const transparent = await whiteToAlpha(path.join(SRC, 'logo.jpeg'));
-  const trimmed = await sharp(transparent).trim({ threshold: 1 }).png().toBuffer();
-  await sharp(trimmed).png({ palette: true, quality: 90, effort: 10, compressionLevel: 9 }).toFile(path.join(BRAND_OUT, 'sdl-logo.png'));
+  // Clean transparent master, kept next to the source for designers and later steps.
+  const master = await sharp(await cleanLogo(LOGO_SRC)).trim({ threshold: 1 }).png().toBuffer();
+  await sharp(master).png({ compressionLevel: 9 }).toFile(path.join(SRC, 'logo-master.png'));
 
-  const white = await toWhiteVersion(trimmed);
-  await sharp(white).png({ palette: true, quality: 90, effort: 10, compressionLevel: 9 }).toFile(path.join(BRAND_OUT, 'sdl-logo-white.png'));
+  await webLogo(master).png(LOGO_PNG).toFile(path.join(BRAND_OUT, 'logo.png'));
+  await webLogo(await toWhiteVersion(master)).png(LOGO_PNG).toFile(path.join(BRAND_OUT, 'logo-white.png'));
 
-  const squareMark = await buildSquareMark(transparent);
-  await sharp(squareMark).png({ palette: true, quality: 90, effort: 10, compressionLevel: 9 }).toFile(path.join(BRAND_OUT, 'sdl-mark.png'));
-  await buildIcons(squareMark);
-
-  // OG image 1200x630 from the landscape hero.
-  await sharp(path.join(SRC, 'landingimage.png')).resize(1200, 630, { fit: 'cover', position: 'centre' })
-    .jpeg({ quality: 82, mozjpeg: true }).toFile(path.join(BRAND_OUT, 'og-image.jpg'));
+  const mark = await buildMark(LOGO_SRC);
+  await webLogo(mark).png(LOGO_PNG).toFile(path.join(BRAND_OUT, 'mark.png'));
+  await buildIcons(mark);
+  // og-image.jpg is rebuilt from the new hero photo in a later step; it is not touched here.
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -222,7 +266,7 @@ function writeManifest(manifest) {
     .map(([k, v]) => `  '${k}': { width: ${v.width}, height: ${v.height}, widths: [${v.widths.join(', ')}] },`)
     .join('\n');
   const ts = `// Generated by scripts/optimize-images.mjs. Do not edit by hand; re-run the script instead.
-// Each entry lists the widths available as /images/sdl/<name>-<width>.webp and .jpg.
+// Each entry lists the widths available as /images/site/<name>-<width>.webp and .jpg.
 export interface SdlImageInfo {
   width: number;
   height: number;
@@ -240,7 +284,7 @@ export type SdlImageName = keyof typeof SDL_IMAGES;
 
 // --icons rebuilds only the icon set, leaving the logos, OG image and photos untouched.
 if (process.argv.includes('--icons')) {
-  await buildIcons(await buildSquareMark(await whiteToAlpha(path.join(SRC, 'logo.jpeg'))));
+  await buildIcons(await buildMark(LOGO_SRC));
   console.log('Icons done.');
 } else {
   await buildBrand();

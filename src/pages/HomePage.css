@@ -1422,8 +1422,8 @@
 }
 
 .thermal-mark {
-  width: 40px;
-  height: 40px;
+  width: 64px;
+  height: 16px;
   object-fit: contain;
   flex-shrink: 0;
 }
