@@ -69,7 +69,7 @@ export const TrackPage: React.FC<TrackPageProps> = ({ onTrack, onNavigate, notFo
   // Load recent searches from localStorage
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('sdl_recent_tracking');
+      const saved = localStorage.getItem('wvl_recent_tracking');
       if (saved) {
         setRecentSearches(JSON.parse(saved).slice(0, 4));
       }
@@ -84,7 +84,7 @@ export const TrackPage: React.FC<TrackPageProps> = ({ onTrack, onNavigate, notFo
       const existing = recentSearches.filter(n => n.toUpperCase() !== clean);
       const updated = [clean, ...existing].slice(0, 4);
       setRecentSearches(updated);
-      localStorage.setItem('sdl_recent_tracking', JSON.stringify(updated));
+      localStorage.setItem('wvl_recent_tracking', JSON.stringify(updated));
     } catch (e) {
       // ignore
     }

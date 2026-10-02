@@ -713,7 +713,7 @@ export const CreateShipmentView: React.FC<CreateShipmentViewProps> = ({
       finalPrice
     };
     try {
-      localStorage.setItem('sdl_admin_shipment_draft', JSON.stringify(draftData));
+      localStorage.setItem('wvl_admin_shipment_draft', JSON.stringify(draftData));
       setDraftSavedToast('Draft manifest saved to local session.');
       setTimeout(() => setDraftSavedToast(null), 3000);
     } catch {

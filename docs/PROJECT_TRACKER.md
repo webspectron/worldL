@@ -1,13 +1,13 @@
-# SDL Global Logistics — Project Tracker
+# World Vexa Logistics — Project Tracker
 
-> **Context:** The SDL platform is **already built and working**: public website, tracking engine, Express/SQLite API,
+> **Context:** The platform (last branded SDL Global Logistics, re-launched as World Vexa Logistics) is **already built and working**: public website, tracking engine, Express/SQLite API,
 > admin console, documents and quotes. Claude is acting as a **senior professional developer** who has taken over this
 > existing codebase to rebrand and improve it. Nothing here is built from scratch; every task modifies the working system
 > in place and must leave it working. See `CLAUDE.md §0`.
 
 **Working method:** treat this like a client engagement on a live system. Before each task, read the affected files; after each task, run `npm run build`, test the flow you touched, commit with a clear message, and log it below.
 
-**Owner:** SDL Global Logistics Ltd · **Repo:** (new SDL repo) · **Target:** sdlgloballogistics.com on Hostinger
+**Owner:** World Vexa Logistics · **Repo:** (World Vexa repo) · **Target:** worldvexalogistics.com on Hostinger
 **Status legend:** `[ ]` to do · `[~]` in progress · `[x]` done · `[!]` blocked (see Needs owner)
 
 ---
@@ -131,7 +131,7 @@ The first baseline ran on older code (`0ae1ff4`). `main` then gained 11 upstream
 - [x] 6.1 Old-brand sweep = zero (REBRAND_MAP §6). *Run 2026-09-29 on source and a fresh build: zero unexplained hits (REBRAND_MAP §7). The last 5 `interstate` hits and the U.S. country defaults in admin create/edit/convert were fixed.*
 - [x] 6.2 Functional test: create shipment in admin → track it publicly → documents download → quote flow → contact form. *Scripted Chrome run on a scratch DB, 20/20: admin login, Book Consignment, public track, 3 status changes shown publicly, BOL, quote → publish → Accept & Book (public UI) → Create Shipment from Quote, Ship booking, Contact, Callback, Messages inbox. Fixed on the way: convert crashed the admin console (Blocked #42). The PDF files themselves still need a visual check by eye.*
 - [!] 6.3 Cross-browser: Chrome, Safari (iOS), Firefox, Samsung Internet; low-end Android test. *Needs the owner's devices (Blocked #43). Desktop Chrome checked at 375 and 1440.*
-- [x] 6.4 SEO: per-page titles/descriptions, `robots.txt`, `sitemap.xml`, OG image, structured data (Organization). *`server/seo.ts`: host-aware `robots.txt` and `sitemap.xml`; the admin host gets `Disallow: /`, a 404 sitemap and an `X-Robots-Tag: noindex` header on every response. Organization JSON-LD in `index.html` (confirmed facts only). Titles/descriptions were already per page (`PAGE_META`). Hash routing limits indexing to `/` (Blocked #44).* **Blocker for go-live:** the OG image URL is absolute (`https://sdlgloballogistics.com/brand/og-image.jpg`) and only works once the domain serves the site; verify it with DEPLOYMENT.md §7 before announcing the launch.
+- [x] 6.4 SEO: per-page titles/descriptions, `robots.txt`, `sitemap.xml`, OG image, structured data (Organization). *`server/seo.ts`: host-aware `robots.txt` and `sitemap.xml`; the admin host gets `Disallow: /`, a 404 sitemap and an `X-Robots-Tag: noindex` header on every response. Organization JSON-LD in `index.html` (confirmed facts only). Titles/descriptions were already per page (`PAGE_META`). Hash routing limits indexing to `/` (Blocked #44).* **Blocker for go-live:** the OG image URL is absolute (`https://worldvexalogistics.com/brand/og-image.jpg`) and only works once the domain serves the site; verify it with DEPLOYMENT.md §7 before announcing the launch.
 - [x] 6.5 Accessibility: keyboard nav, focus states, alt text, contrast, reduced motion. *axe-core (WCAG 2.1 AA) on 11 public pages at 375 and 1440: 0 violations after fixes. Added skip link, global `:focus-visible` ring, keyboard-reachable logo and breadcrumb, Escape on public overlays, Ship labels, contrast fixes, Legal mobile overflow, global reduced-motion guard. Not audited: the admin console and later form steps (Blocked #45).*
 - [ ] 6.6 Take "after" screenshots → `screens/after/`.
 - [x] 6.7 **Remove ALL demo data before launch (launch blocker).** Done 2026-09-30: client mock fallback, admin seed, fake timeline and checkpoint dates, the home-map demo dot, `mockShipments.ts`, `demoData.ts` and `server/seed.ts` removed; `SEED_DEMO_DATA` no longer does anything. The production database was never seeded. The admin wizard's example presets (#47c) are not demo shipments and were left for an owner decision. Every spot is marked `DEMO DATA — remove before launch (tracker 6.7).` in the code; `grep -rn "DEMO DATA" src server` lists them. Remove:
@@ -142,13 +142,32 @@ The first baseline ran on older code (`0ae1ff4`). `main` then gained 11 upstream
   - and keep `SEED_DEMO_DATA=false` in production (`server/seed.ts` + `src/shared/demoData.ts` can then be deleted).
 
 ## Phase 7 — Deploy (DEPLOYMENT.md)
-- [ ] 7.1 Hostinger Node.js app connected to the SDL GitHub repo; Node ≥ 22.5.
+- [ ] 7.1 Hostinger Node.js app connected to the World Vexa GitHub repo; Node ≥ 22.5.
 - [ ] 7.2 Env vars set (fresh `ADMIN_PASSWORD_HASH`, `SESSION_SECRET`, `DB_PATH` on persistent storage, `SEED_DEMO_DATA=false`).
 - [ ] 7.3 DNS: root + `www` + `private.` (admin, alias of the same Node app); SSL on all three.
-- [ ] 7.4 Email: info@sdlgloballogistics.com mailbox + SPF/DKIM/DMARC.
+- [ ] 7.4 Email: info@worldvexalogistics.com mailbox + SPF/DKIM/DMARC.
 - [ ] 7.5 Post-deploy smoke test (DEPLOYMENT.md §7); set up DB backup routine.
 
 ---
+
+## Re-launch (World Vexa Logistics, 2026-10-02)
+Done, in four commits on top of the working SDL system (no design, layout, feature or schema changes):
+- **Name, domain, email** (`rebrand:`): `src/config/brand.ts` is the single source; World Vexa Logistics / WVL / info@worldvexalogistics.com / worldvexalogistics.com; admin only on `private.worldvexalogistics.com` (and localhost); tracking IDs `WVL` + 5 (8 chars); references `WVL-SL-`, `WVL-TKT-`, `WVL-INV-`; DB file `data/app.db`, fresh DB on the new host.
+- **Logo, icons, image paths** (`rebrand:`): new logo (checkerboard cleaned by script), white logo, mark, favicons, OG image; `/images/sdl/` → `/images/site/`.
+- **Photos** (`assets:`): every photo with the old livery replaced with free HD stock (sources logged).
+- **QA** (`chore: re-launch QA`): old-brand sweep of source and build, storage keys and CSS comments renamed, full production-mode run.
+
+**QA result, 2026-10-02** (`npm run build` 0 TS errors, `npm test` 33/33; `NODE_ENV=production npm start` on a throwaway DB, real Chrome with the public and `private.` hostnames mapped to the local server):
+- Old-brand sweep of `src`, `server`, `index.html`, `Public`, `dist`, `dist-server`: zero visible hits. Remaining by design: the settings migration in `server/db.ts` (must name the old values to rewrite them; REBRAND_MAP §6) and internal `sdl-*` classes/tokens and TS identifiers.
+- All 11 public routes load with World Vexa titles; Home at 375 px has no horizontal scroll; all 112 site photos and brand assets return 200.
+- Admin: does not open on the public host; wrong password rejected; login works on `private.`; "WVL Operations Console".
+- Create shipment → `WVLTYQBJ` (8 chars, client-supplied ID ignored) → tracked publicly (case-insensitive) → status changed to In transit → shown publicly.
+- Documents: Shipping Label, Receipt, Commercial Invoice, BOL/AWB, Insurance all download as PDFs showing the new logo, "World Vexa Logistics", info@worldvexalogistics.com and the domain; invoice ref `WVL-INV-`.
+- Quote submitted (`QR-2026-#####`, see #54); contact message → `WVL-TKT-######`.
+- `/robots.txt` and `/sitemap.xml` give `https://worldvexalogistics.com`; on the admin host robots is `Disallow: /`.
+- Known, not regressions: public pages log 401s from admin-only API calls (#47d); PDFs were checked in Chrome only (#43).
+
+**Needs owner before or soon after go-live:** phone/WhatsApp (#2), HQ address (#3), social links (#9) all stay hidden until supplied; a real transparent logo file (PNG/SVG) from the designer, since the checkerboard was cleaned by script (#49); new admin password hash and session secret set on the host (7.2).
 
 ## Blocked / Needs owner
 | # | Item | Needed for |
@@ -162,7 +181,7 @@ The first baseline ran on older code (`0ae1ff4`). `main` then gained 11 upstream
 | 7 | Real partner/carrier logos you're authorised to show (written permission). Home now shows "Modes we connect". | 3.14 |
 | 8 | Certifications/licences you actually hold (e.g. IATA, customs broker licence, ISO) | 3.2, 3.4 |
 | 9 | Social media links | 3.1 |
-| 10 | ~~Admin subdomain name~~ **Resolved: `private.sdlgloballogistics.com`** | 7.3 |
+| 10 | ~~Admin subdomain name~~ **Resolved: `private.worldvexalogistics.com`** | 7.3 |
 | 11 | **Lawyer review of legal pages** (all five tabs, CONTENT §13.1). Drafts are live on `#/legal` with "Last updated: 29 September 2026"; see #37 for the open facts. | 3.11 |
 | 12 | ~~Returns kept only in browser state~~ **Resolved 2026-09-28: a return is its own linked shipment row (`POST /api/shipments/:id/return`).** Still browser-only after a control action: `statusMessage`, the audit log and the hold "frozen" flag (no columns). Decide whether to persist them. | 1.8 follow-up |
 | 13 | Public site shows demo shipments from the client mock (`App.tsx` looks up `mockShipments` before the API), even when the DB has no demo data. Remove with the demo data before launch. | 6.7 |
@@ -200,12 +219,14 @@ The first baseline ran on older code (`0ae1ff4`). `main` then gained 11 upstream
 | 45 | **Accessibility not yet covered:** the admin console, later steps of the Quote/Ship forms and all modal states were not audited with axe; modals close with Escape but don't trap focus. Phase 5 motion must add its own reduced-motion paths. | 6.5, 5.x |
 | 46 | **Customer-facing false promises:** the Track Result "Get Delivery Alerts" form says "Subscribed Successfully!" but saves and sends nothing. Nothing opens it today (dead code); delete it or connect it to email/SMS (#14). | 6.2 |
 | 47 | **Found in QA, not fixed (need a decision or a data-model change):** (a) the admin wizard's dangerous-goods **Emergency Response Contact** field is not saved (no value/handler); (b) the admin "Book Consignment" quick form is still U.S.-shaped (required "State", NY/LA placeholders, lbs only); (c) the pet preset buttons and the default pet fields in the admin wizard pre-fill "Barnaby • (212) 555-0199" (fictional range; clear with 6.7); (d) every public page calls admin-only APIs and logs 401s in the browser console; (e) `POST /api/quotes` accepts a client-chosen quote `id`, and `POST /api/documents/generate` (public, rate-limited) returns 500 instead of 400 for a bad body. | 6.2 |
-| 48 | **Old-brand browser-storage key names are visible in the Cookie Policy:** `sdl_recent_tracking`, `sdl_units`, `sdl_live_shipment_stream` (and the admin draft key `sdl_admin_shipment_draft`). Renaming them is safe on the new domain (a new origin has no stored values) but touches TrackPage, simulationEngine, useUnitSystem, CreateShipmentView and legalDocs. Decide: rename now (proposed `wvl_*` or neutral names) or in the Prompt 6 sweep. | Re-launch |
+| 48 | ~~Old-brand browser-storage key names~~ **Resolved in re-launch QA: keys renamed to `wvl_recent_tracking`, `wvl_units`, `wvl_live_shipment_stream`, `wvl_admin_shipment_draft` (code, Cookie Policy, CONTENT §13).** Was: **Old-brand browser-storage key names are visible in the Cookie Policy:** `sdl_recent_tracking`, `sdl_units`, `sdl_live_shipment_stream` (and the admin draft key `sdl_admin_shipment_draft`). Renaming them is safe on the new domain (a new origin has no stored values) but touches TrackPage, simulationEngine, useUnitSystem, CreateShipmentView and legalDocs. Decide: rename now (proposed `wvl_*` or neutral names) or in the Prompt 6 sweep. | Re-launch |
 | 49 | **Designer logo files wanted.** The supplied logo had a checkerboard painted in; Prompt 3 cleaned it with a script (`images/logo-master.png`, clean on light and dark). A real transparent PNG or SVG from the designer would still be sharper and safer. Also ask for: (a) a **square icon version** for favicons: the "WV" mark is 4:1, so the 16/32 px tab icons use only the red globe/parcel, which is a red blob at 16 px; (b) a **compact header lockup**: at the header's 40–56 px height the "FAST, SAFE, RELIABLE" line inside the logo is too small to read. | Re-launch |
 | 50 | **Home hero ship name:** the new Home hero (Pexels 799091) shows the vessel name "CHARLES ISLAND / NASSAU" on the stern, legible on large screens. It is a ship name, not a company logo; say if you want it retouched out or a different photo. | Re-launch P4 |
 | 51 | **Industry photos with no recorded source:** `images/site/healthcare-pharma.jpg`, `automotive-parts.jpg`, `ecommerce-retail.jpg` (no logos, kept as they are) are not listed in any SOURCES.md, so their licence is unknown. Replace them with logged stock photos or confirm where they came from. | 4.2, Re-launch P4 |
-| 52 | **Old brand in code comments:** about ten admin CSS files open with an "SDL GLOBAL LOGISTICS — …" header comment (`src/admin/**/*.css`). Never shown to visitors, but against CLAUDE.md §7 (brand-neutral comments); a separate `rebrand:` commit can drop them. | Re-launch |
+| 52 | ~~Old brand in code comments~~ **Resolved in re-launch QA: header comments in 20 CSS files now say World Vexa Logistics / "brand red".** Was: **Old brand in code comments:** about ten admin CSS files open with an "SDL GLOBAL LOGISTICS — …" header comment (`src/admin/**/*.css`). Never shown to visitors, but against CLAUDE.md §7 (brand-neutral comments); a separate `rebrand:` commit can drop them. | Re-launch |
 | 53 | **Home callback form at 375 px:** the phone field renders very tall (about 180 px) in the stacked mobile layout. Not caused by the photo swap (no CSS changed); needs a look in the form CSS. | 3.2 |
+| 54 | **Quote and document numbers have no WVL prefix, and the year is hard-coded:** quotes are `QR-2026-#####` and documents `LBL-/REC-/INV-/BOL-/INS-2026-#####` (`server/routes/quotes.ts:115`, `documents.ts:121`). Brand-neutral, but they will still say 2026 next year. BRAND_GUIDE §7 does not define these; decide whether to keep them, use the current year, or add a `WVL-` prefix. | Re-launch QA |
+| 55 | **Server fallback delivery date:** `POST /api/shipments` stores "August 24, 2026 / by 5:00 PM" when a request carries no estimated delivery (`server/routes/shipments.ts`). The admin wizard normally sends one, but any request without it gets a fixed past date. Replace with "to be confirmed" or a computed date. | Re-launch QA |
 
 ## Decisions log
 | Date | Decision |
@@ -274,6 +295,7 @@ The first baseline ran on older code (`0ae1ff4`). `main` then gained 11 upstream
 | 2026-10-02 | Re-launch P2 | **Name, domain and email → World Vexa Logistics** (`brand.ts`: COMPANY, COMPANY_SHORT `WVL`, LEGAL_NAME without Ltd, EMAIL, DOMAIN, TRACKING_PREFIX `WVL`, new `EXAMPLE_TRACKING_ID`). Hard-coded copy in App/Home/Services/Ship/Track/Contact/TrackResult/About, help article, legal docs, DocumentBrand, SupportModal and the server (health name, start log, track error) now read brand.ts. References `WVL-SL/TKT/INV-######`. `index.html` meta/OG/JSON-LD and `site.webmanifest` updated. package `world-vexa-logistics`, DB file `app.db` (startup warns about any other `.db` in the data folder), session cookie `admin.sid`. Photo alt text made brand-neutral until Prompt 4. CONTENT.md / BRAND_GUIDE.md updated, legal Last updated 2 October 2026. Verified: build passes, 33/33 tests, built server on a scratch DB: health, robots, wrong/right password, create → `WVLJC89S` (8 chars) → public track, `WVL-TKT-` message reference, logout. Logo/photo paths and og-image left for Prompts 3–4. |
 | 2026-10-02 | Re-launch P3 | **New logo, icons and image paths.** `scripts/optimize-images.mjs` now cleans the painted-in checkerboard from `images/World Vexa Logistics Logo.png` (whiteness → alpha with un-blended edges, despeckle) into `images/logo-master.png`, then builds `Public/brand/logo.png`, `logo-white.png`, `mark.png` (1200 px wide) and the six icons (16/32 from the globe/parcel, the rest from the full mark, all on white). `brand.ts` LOGO/LOGO_WHITE, JSON-LD logo (`logo.png`), icon `?v=4` in index.html and the manifest; `sdl-logo*.png` / `sdl-mark.png` deleted; OG image generation removed from the script until Prompt 4. Photo folder `Public/images/sdl/` → `Public/images/site/` (88 files, byte-identical) in the script and ResponsiveImage. Home thermal-label mark box 40×40 → 64×16 (only its size rule; the mark is now 4:1). Verified: build passes; built server on a scratch DB, screenshots at 1440 and 375 px: header 52/40 px, drawer 42 px, footer 56 px, admin sidebar 42 px, invoice preview 72 px, quote print 88 px, the same heights as before, all loaded. Admin login has no logo image (unchanged). |
 | 2026-10-02 | Re-launch P4 | **Branded photos replaced with free HD stock.** Old-brand photos: `landingimage(-mobile).png` (hero-home, hero-home-mobile, track-hero, callback-banner, services-hero, about-hero, OG) and `brand-img1–8.PNG` (track-result-vehicle, contact-team; the rest unused); also removed `logo.jpeg` (old logo) and two Pexels cards with third-party liveries (P&O Nedlloyd/OOCL containers, airline + JAL tug). Nine Pexels originals (2400–8997 px) in `images/free-hd/` with `SOURCES.md`; script entries repointed (crops for hero-home-mobile, about-hero, track-result-vehicle, contact-team), hero output now capped at 2400 px (it used to add the full source width), `og-image.jpg` rebuilt from the new hero + full-colour logo. Alt text updated in Home/Services/About/Track/TrackResult and CONTENT §12. Verified: build passes; built server on a scratch DB, CDP screenshots of Home, Services, About, Track, Track Result, Contact at 375 and 1440 (no horizontal overflow). |
+| 2026-10-02 | Re-launch QA | Final pre-deploy check (see "Re-launch" section). Fixed: Cookie Policy showed old-brand storage keys → `wvl_*` (#48); old name in 20 CSS header comments (#52). Verified: build, 33/33 tests, production-mode run in Chrome (public pages, admin host gating, login, create → track → status, 5 PDF types, quote, contact, robots/sitemap). New: #54, #55. |
 ---
 
 ## System notes (codebase walkthrough, updated 2026-09-26 for commit `6b8185f`)

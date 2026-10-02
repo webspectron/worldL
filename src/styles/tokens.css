@@ -1,7 +1,7 @@
 /* =========================================================================
-   SDL Global Logistics design system — tokens (BRAND_GUIDE.md §4)
-   Palette derived from the SDL logo: black #060606 and red #D3070B.
-   Primary = graphite (logo black), Accent = SDL red (500 = logo red),
+   World Vexa Logistics design system — tokens (BRAND_GUIDE.md §4)
+   Palette derived from the logo: black #060606 and red #D3070B.
+   Primary = graphite (logo black), Accent = brand red (500 = logo red),
    Ink = deep surfaces. Status colours stay semantic, never brand colours.
    ========================================================================= */
 :root {
@@ -17,7 +17,7 @@
   --sdl-primary-800: #262626;
   --sdl-primary-900: #171717;
 
-  /* Brand: Accent (SDL red; 500 is the exact logo red). On Ink backgrounds use 400 for
+  /* Brand: Accent (brand red; 500 is the exact logo red). On Ink backgrounds use 400 for
      small text; 500 only for large text, icons and buttons (3.21:1 on Ink 950). */
   --sdl-accent-50: #FFF2F0;
   --sdl-accent-100: #FFE2DE;

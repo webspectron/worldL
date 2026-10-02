@@ -585,9 +585,9 @@ The text below is rendered from `src/data/legalDocs.ts`; change both together. P
    We do not use analytics or advertising cookies. If we add analytics, we will update this page and ask for your consent where the law requires it.
 2. *Choices saved in your browser.*
    Some pages remember a few choices in your browser's local storage. This data stays on your device and is not sent to us:
-   - sdl_recent_tracking: tracking IDs you looked up recently, so you can open them again.
-   - sdl_units: whether you prefer metric or imperial units.
-   - sdl_live_shipment_stream: the latest update for a shipment you are viewing, so other open tabs stay in step.
+   - wvl_recent_tracking: tracking IDs you looked up recently, so you can open them again.
+   - wvl_units: whether you prefer metric or imperial units.
+   - wvl_live_shipment_stream: the latest update for a shipment you are viewing, so other open tabs stay in step.
    You can clear these at any time in your browser settings.
 3. *Other services our pages use.*
    Our pages load map tiles from Esri (ArcGIS), fonts from Google Fonts and some photos from Unsplash, and use OpenStreetMap Nominatim and OSRM to look up addresses and routes. These services receive your IP address when your browser contacts them.

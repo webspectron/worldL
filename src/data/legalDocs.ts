@@ -239,9 +239,9 @@ export function legalDocs({ email, address }: LegalContact): LegalDoc[] {
           body: [
             "Some pages remember a few choices in your browser's local storage. This data stays on your device and is not sent to us:",
             [
-              'sdl_recent_tracking: tracking IDs you looked up recently, so you can open them again.',
-              'sdl_units: whether you prefer metric or imperial units.',
-              'sdl_live_shipment_stream: the latest update for a shipment you are viewing, so other open tabs stay in step.'
+              'wvl_recent_tracking: tracking IDs you looked up recently, so you can open them again.',
+              'wvl_units: whether you prefer metric or imperial units.',
+              'wvl_live_shipment_stream: the latest update for a shipment you are viewing, so other open tabs stay in step.'
             ],
             'You can clear these at any time in your browser settings.'
           ]
