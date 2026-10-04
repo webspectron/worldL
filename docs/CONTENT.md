@@ -44,7 +44,7 @@ Spelling: International/British English (see BRAND_GUIDE §3).
 | Quote | Get a Rate Quote \| World Vexa Logistics | Tell us what you're moving and where. A logistics coordinator will send your rate. |
 | Ship | Book a Shipment \| World Vexa Logistics | Book a pickup, build a multi-piece shipment and get your tracking ID in minutes. |
 | About | About Us \| World Vexa Logistics | Who we are, how we work and why shippers around the world trust WVL with cargo that matters. |
-| Locations | Global Network \| World Vexa Logistics | The gateways and trade lanes that connect WVL shipments across Europe, the Middle East, Asia, the Americas and Oceania. |
+| Locations | Global Network \| World Vexa Logistics | The gateways and trade lanes that connect WVL shipments across Europe, the Middle East, Asia, the Americas, Oceania and Africa. |
 | Help | Help Centre \| World Vexa Logistics | Answers on tracking, booking, customs, documents and deliveries. |
 | Contact | Contact Us \| World Vexa Logistics | Talk to a WVL coordinator, any time zone, any day. |
 | Legal | Policies \| World Vexa Logistics | Privacy, terms of service, shipping terms and accessibility. |
@@ -137,7 +137,7 @@ Spelling: International/British English (see BRAND_GUIDE §3).
 ### 2.7 Global network map (replaces "Active U.S. Trade Gateways")
 - **Eyebrow:** `GLOBAL NETWORK`
 - **H2:** `Connected across the world's key trade lanes`
-- **Intro:** `Our gateways link Europe, the Middle East, Asia, the Americas and Oceania, so your shipment always has a direct, well-travelled route.`
+- **Intro:** `Our gateways link Europe, the Middle East, Asia, the Americas, Oceania and Africa, so your shipment always has a direct, well-travelled route.`
 - **Side stats** (replace the invented numbers): **5** "Continents served" · **Air · Ocean · Road** "Modes connected" · **24/7** "Operations desk". Only show gateway/country counts once confirmed.
 - **Legend:** `Gateway` · `Trade lane` · `Live shipment` (demo)
 - **CTA:** `View our network →`
@@ -271,7 +271,7 @@ Remove the invented client logos. Replace with an icon row: **Air Freight · Oce
 
 - **Hero image:** `about-hero` (12:5 crop of `images/free-hd/about-hero.jpg`). The credentials row shows only the admin "regulatory line" when it is set.
 
-**Stat cards** (reuse approved stats; no invented figures): **24/7** "Global operations desk" · `Our desk follows the sun across time zones.` — **1** "Tracking ID from start to finish" · `One team accountable from the first mile to the last.` — **5** "Continents served" · `Gateways across Europe, the Middle East, Asia, the Americas and Oceania.` — **Air · Ocean · Road** "Modes connected" · `Air, ocean and road, connected.`
+**Stat cards** (reuse approved stats; no invented figures): **24/7** "Global operations desk" · `Our desk follows the sun across time zones.` — **1** "Tracking ID from start to finish" · `One team accountable from the first mile to the last.` — **5** "Continents served" · `Gateways across Europe, the Middle East, Asia, the Americas, Oceania and Africa.` — **Air · Ocean · Road** "Modes connected" · `Air, ocean and road, connected.`
 
 **Our approach (5 points)** (shown under the story text, eyebrow `OUR STORY`; photo `about-operations` with the caption **24/7 Global operations desk** · `Our desk follows the sun across time zones.`)
 1. **Milestone Visibility.** Every scan and hand-off is recorded and visible to you.
@@ -453,8 +453,12 @@ Presented as "gateways we serve". Don't describe them as WVL-owned facilities un
 | YYZ | Toronto | Canada | CA | 43.6777 | -79.6248 | America/Toronto | Air · Road |
 | GRU | São Paulo | Brazil | BR | -23.4356 | -46.4731 | America/Sao_Paulo | Air · Ocean |
 | SYD | Sydney | Australia | AU | -33.9399 | 151.1753 | Australia/Sydney | Air · Ocean |
+| LOS | Lagos | Nigeria | NG | 6.5774 | 3.3212 | Africa/Lagos | Air · Ocean · Road |
+| ACC | Accra | Ghana | GH | 5.6052 | -0.1668 | Africa/Accra | Air · Road |
+| NBO | Nairobi | Kenya | KE | -1.3192 | 36.9278 | Africa/Nairobi | Air · Road |
+| JNB | Johannesburg | South Africa | ZA | -26.1392 | 28.2460 | Africa/Johannesburg | Air · Road |
 
-**Hero-globe trade lanes (arcs):** ORD–LHR, ICN–DXB, NRT–LAX, LHR–JFK, DXB–SIN, SIN–SYD, PVG–RTM, HKG–LAX, FRA–DXB, NRT–SIN, ICN–ORD, GRU–JFK, IAH–RTM, YYZ–LHR, BOM–DXB, MIA–GRU, MIA–FRA. (African gateways replaced with Asia/USA gateways at the owner's request, 2026-10-04.)
+**Hero-globe trade lanes (arcs):** ORD–LHR, ICN–DXB, NRT–LAX, LHR–JFK, DXB–SIN, SIN–SYD, PVG–RTM, HKG–LAX, FRA–DXB, NRT–SIN, ICN–ORD, GRU–JFK, IAH–RTM, YYZ–LHR, BOM–DXB, MIA–GRU, MIA–FRA, LOS–LHR, LOS–DXB, LOS–JFK, JNB–DXB, NBO–LHR. (Owner, 2026-10-04: Asia/USA gateways added; African gateways kept, listed last.)
 
 ---
 

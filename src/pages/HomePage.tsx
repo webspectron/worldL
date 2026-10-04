@@ -713,7 +713,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onTrack, onNavigate }) => {
               </div>
 
               <p className="hub-description-text">
-                Our gateways link Europe, the Middle East, Asia, the Americas and Oceania, so your shipment always has a direct, well-travelled route.
+                Our gateways link Europe, the Middle East, Asia, the Americas, Oceania and Africa, so your shipment always has a direct, well-travelled route.
               </p>
 
               <div className="network-side-stats">

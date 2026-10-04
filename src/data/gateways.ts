@@ -3,7 +3,7 @@
 
 export type TransportMode = 'Air' | 'Ocean' | 'Road';
 
-export type GatewayRegion = 'Europe' | 'Middle East' | 'Asia' | 'Americas' | 'Oceania';
+export type GatewayRegion = 'Europe' | 'Middle East' | 'Asia' | 'Americas' | 'Oceania' | 'Africa';
 
 export interface Gateway {
   code: string;
@@ -37,6 +37,10 @@ export const GATEWAYS: Gateway[] = [
   { code: 'YYZ', name: 'Toronto', city: 'Toronto', country: 'Canada', iso: 'CA', lat: 43.6777, lng: -79.6248, timeZone: 'America/Toronto', modes: ['Air', 'Road'], region: 'Americas' },
   { code: 'GRU', name: 'São Paulo', city: 'São Paulo', country: 'Brazil', iso: 'BR', lat: -23.4356, lng: -46.4731, timeZone: 'America/Sao_Paulo', modes: ['Air', 'Ocean'], region: 'Americas' },
   { code: 'SYD', name: 'Sydney', city: 'Sydney', country: 'Australia', iso: 'AU', lat: -33.9399, lng: 151.1753, timeZone: 'Australia/Sydney', modes: ['Air', 'Ocean'], region: 'Oceania' },
+  { code: 'LOS', name: 'Lagos', city: 'Lagos', country: 'Nigeria', iso: 'NG', lat: 6.5774, lng: 3.3212, timeZone: 'Africa/Lagos', modes: ['Air', 'Ocean', 'Road'], region: 'Africa' },
+  { code: 'ACC', name: 'Accra', city: 'Accra', country: 'Ghana', iso: 'GH', lat: 5.6052, lng: -0.1668, timeZone: 'Africa/Accra', modes: ['Air', 'Road'], region: 'Africa' },
+  { code: 'NBO', name: 'Nairobi', city: 'Nairobi', country: 'Kenya', iso: 'KE', lat: -1.3192, lng: 36.9278, timeZone: 'Africa/Nairobi', modes: ['Air', 'Road'], region: 'Africa' },
+  { code: 'JNB', name: 'Johannesburg', city: 'Johannesburg', country: 'South Africa', iso: 'ZA', lat: -26.1392, lng: 28.2460, timeZone: 'Africa/Johannesburg', modes: ['Air', 'Road'], region: 'Africa' },
 ];
 
 // Scheduled trade lanes, drawn as great-circle arcs (CONTENT.md §9).
@@ -45,6 +49,7 @@ export const TRADE_LANES: [string, string][] = [
   ['SIN', 'SYD'], ['PVG', 'RTM'], ['HKG', 'LAX'], ['FRA', 'DXB'], ['NRT', 'SIN'],
   ['ICN', 'ORD'], ['GRU', 'JFK'], ['IAH', 'RTM'], ['YYZ', 'LHR'], ['BOM', 'DXB'],
   ['MIA', 'GRU'], ['MIA', 'FRA'],
+  ['LOS', 'LHR'], ['LOS', 'DXB'], ['LOS', 'JFK'], ['JNB', 'DXB'], ['NBO', 'LHR'],
 ];
 
 export function getGateway(code: string): Gateway | undefined {

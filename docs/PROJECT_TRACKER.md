@@ -303,6 +303,7 @@ Done, in four commits on top of the working SDL system (no design, layout, featu
 | 2026-10-04 | Admin | **Admin workspace background.** `.sdl-admin-main-wrapper`: soft brand-red glow top right, ink glow bottom left, fine dot grid, fixed to the viewport (cards unchanged). Verified: built server on a scratch DB, headless screenshots of the logged-in console at 1440/768/375. |
 | 2026-10-04 | Cleanup | **Unused images and files removed.** `contact-team` photo set (8 files in Public/images/site + its original; never placed on a page) and its script/manifest/SOURCES/CONTENT entries; `screens/` (~11 MB old reference screenshots); unimported components ShipmentDocuments, ShipmentPassport, ShipmentTimeline (+ CSS). Verified: build passes, `npm test` 33/33. |
 | 2026-10-04 | owner request | Gateway network: removed Lagos, Accra, Nairobi, Johannesburg; added Tokyo (NRT), Seoul (ICN), Chicago (ORD), Miami (MIA); trade lanes, homepage default (JFK), demo label, "continents" copy and city placeholders updated. CONTENT.md §9 updated. |
+| 2026-10-04 | owner request | African gateways (LOS, ACC, NBO, JNB) and their lanes restored, listed last; Africa is the last region on the Network page and in the region copy. |
 ---
 
 ## System notes (codebase walkthrough, updated 2026-09-26 for commit `6b8185f`)
