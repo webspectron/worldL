@@ -1629,7 +1629,7 @@ export const CreateShipmentView: React.FC<CreateShipmentViewProps> = ({
                       type="text"
                       value={senderCity}
                       onChange={e => setSenderCity(e.target.value)}
-                      placeholder="e.g. Lagos"
+                      placeholder="e.g. New York"
                     />
                   </div>
                 </div>

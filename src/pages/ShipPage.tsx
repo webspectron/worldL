@@ -86,7 +86,7 @@ const AddressFields: React.FC<AddressFieldsProps> = (f) => (
   </>
 );
 
-// "Houston, TX" / "Lagos, Nigeria" for summaries
+// "Houston, TX" / "Tokyo, Japan" for summaries
 const placeText = (city: string, region: string, countryCode: string) =>
   [city, countryCode === 'US' ? region.trim().toUpperCase() : getCountry(countryCode)?.name].filter(Boolean).join(', ');
 
@@ -698,7 +698,7 @@ export const ShipPage: React.FC<ShipPageProps> = ({ onTrack, onNavigate }) => {
                       onRegion={setSenderState}
                       postcode={senderZip}
                       onPostcode={setSenderZip}
-                      cityPlaceholder="e.g. Lagos"
+                      cityPlaceholder="e.g. New York"
                     />
                   </div>
 

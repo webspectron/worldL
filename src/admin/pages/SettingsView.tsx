@@ -395,7 +395,7 @@ export const SettingsView: React.FC = () => {
                 <div className="toggle-info">
                   <strong>Display Estimated Delivery Windows Publicly</strong>
                   <p>
-                    Shows the estimated delivery date and time bracket (e.g. <i>"Estimated delivery: 2 October 2026, by 5:00 PM (Lagos time)"</i>, in the destination's time zone) on public tracking.
+                    Shows the estimated delivery date and time bracket (e.g. <i>"Estimated delivery: 2 October 2026, by 5:00 PM (New York time)"</i>, in the destination's time zone) on public tracking.
                   </p>
                 </div>
                 <label className="switch-toggle">

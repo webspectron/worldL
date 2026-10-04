@@ -38,7 +38,7 @@ function addressPayload(countryCode: string, city: string, region: string, postc
   };
 }
 
-// "Houston, TX, United States" / "Lagos, Nigeria"
+// "Houston, TX, United States" / "Tokyo, Japan"
 function placeLabel(city: string, region: string, countryCode: string) {
   const country = getCountry(countryCode);
   return [city || '—', countryCode === 'US' ? region.trim().toUpperCase() : '', country?.name].filter(Boolean).join(', ');
@@ -305,7 +305,7 @@ export const QuotePage: React.FC<QuotePageProps> = ({ onNavigate, initialService
                           required
                           value={side.city}
                           onChange={(e) => side.setCity(e.target.value)}
-                          placeholder={side.key === 'origin' ? 'e.g. Lagos' : 'e.g. London'}
+                          placeholder={side.key === 'origin' ? 'e.g. New York' : 'e.g. London'}
                           className="sdl-input"
                         />
                       </div>
