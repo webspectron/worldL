@@ -3,29 +3,13 @@ import {
   Package,
   Search,
   Plus,
-  Filter,
   Eye,
-  Radio,
-  FileCheck,
   FileText,
-  MoreVertical,
-  ArrowRight,
   X,
   CheckCircle2,
-  Calendar,
   Truck,
   MapPin,
-  Clock,
-  Layers,
-  Sparkles,
-  ArrowUpRight,
-  Download,
-  Copy,
-  Check,
-  Plane,
   AlertCircle,
-  ShieldCheck,
-  Tag,
   Edit3,
   Trash2
 } from 'lucide-react';
@@ -63,8 +47,6 @@ export const AllShipmentsView: React.FC<AllShipmentsViewProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [serviceFilter, setServiceFilter] = useState<string>('ALL');
-  const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
-  const [copiedId, setCopiedId] = useState<string | null>(null);
   const [editModalShipment, setEditModalShipment] = useState<Shipment | null>(null);
   const [deleteModalShipment, setDeleteModalShipment] = useState<Shipment | null>(null);
   const [showTrashModal, setShowTrashModal] = useState(false);
@@ -127,13 +109,6 @@ export const AllShipmentsView: React.FC<AllShipmentsViewProps> = ({
       .replace('October', 'Oct')
       .replace('November', 'Nov')
       .replace('December', 'Dec');
-  };
-
-  const copyTracking = (num: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    navigator.clipboard.writeText(num);
-    setCopiedId(num);
-    setTimeout(() => setCopiedId(null), 2000);
   };
 
   const handleCreateSubmit = async (e: React.FormEvent) => {

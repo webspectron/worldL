@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, Clock, ChevronDown, ChevronUp, MapPin } from 'lucide-react';
+import { Check, ChevronDown, ChevronUp, MapPin } from 'lucide-react';
 import { TrackingEvent } from '../types/shipment';
 import './ShipmentTimeline.css';
 
@@ -26,7 +26,6 @@ export const ShipmentTimeline: React.FC<ShipmentTimelineProps> = ({
         {displayEvents.map((evt) => {
           const isCurrent = evt.isCurrent;
           const isCompleted = evt.isCompleted && !isCurrent;
-          const isFuture = evt.isFuture;
 
           return (
             <div

@@ -15,31 +15,10 @@ import {
   Trash2,
   Printer,
   FileCheck,
-  Download,
-  AlertCircle,
-  Clock,
-  Sparkles,
   Save,
-  RotateCcw,
-  ShieldCheck,
-  DollarSign,
-  MapPin,
-  Compass,
-  Barcode,
   Car,
-  Camera,
-  Key,
-  FileBadge,
-  Wrench,
   CheckSquare,
   Square,
-  X,
-  ZoomIn,
-  Upload,
-  Shield,
-  Lock,
-  Anchor,
-  Thermometer,
   AlertTriangle,
   PawPrint,
   Heart
@@ -297,8 +276,8 @@ export const CreateShipmentView: React.FC<CreateShipmentViewProps> = ({
   // ----------------------------------------------------
   // STEP 4: Route & Intake Location
   // ----------------------------------------------------
-  const [initialLocationMode, setInitialLocationMode] = useState<'NOT_RECEIVED' | 'ORIGIN' | 'CUSTOM'>('ORIGIN');
-  const [customInitialLocation, setCustomInitialLocation] = useState('New York Gateway Facility');
+  const [initialLocationMode] = useState<'NOT_RECEIVED' | 'ORIGIN' | 'CUSTOM'>('ORIGIN');
+  const [customInitialLocation] = useState('New York Gateway Facility');
 
   // ----------------------------------------------------
   // STEP 5: Service & Operational Requirements
@@ -720,12 +699,6 @@ export const CreateShipmentView: React.FC<CreateShipmentViewProps> = ({
       setDraftSavedToast('Draft saved.');
       setTimeout(() => setDraftSavedToast(null), 3000);
     }
-  };
-
-  // Validation per step (non-blocking so the administrator can move freely between steps)
-  const validateStep = (_step?: number): boolean => {
-    setErrors({});
-    return true;
   };
 
   const handleNextStep = () => {

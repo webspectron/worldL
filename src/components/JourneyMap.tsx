@@ -4,7 +4,7 @@ import { destroyMap, useLeaflet, type Leaflet } from '../utils/leaflet';
 import 'leaflet/dist/leaflet.css';
 import { RouteCheckpoint, ShipmentStatus } from '../types/shipment';
 import { calculateRouteGeometry, calculateEstimatedPosition, fetchLiveRoadRoute, findNearestPointOnPolyline, type TransportMode } from '../services/routingEngine';
-import { Layers, ZoomIn, ZoomOut, Compass, ChevronDown, AlertTriangle, ShieldAlert, Pause, Truck, ArrowRight } from 'lucide-react';
+import { ZoomIn, ZoomOut, Compass, ChevronDown, AlertTriangle, Pause, Truck } from 'lucide-react';
 import { shipmentStatusLabel } from '../shared/shipmentStatus';
 import { TRANSPORT_LEG_LABELS } from '../shared/transportMode';
 import './JourneyMap.css';

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Globe,
-  Truck,
   ShieldCheck,
   ArrowRight,
   Zap,

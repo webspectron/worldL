@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ArrowRight, Save, Building, User, Package, Calendar, MapPin } from 'lucide-react';
+import { X, ArrowRight, Save, Building, User, Package } from 'lucide-react';
 import { Shipment } from '../../types/shipment';
 import { resolveLocation } from '../../services/geocodingService';
 import './EditShipmentModal.css';

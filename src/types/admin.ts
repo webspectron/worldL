@@ -1,4 +1,3 @@
-import { Shipment, ShipmentStatus, HealthStatus, TrackingEvent, ShipmentDocument } from './shipment';
 
 export type QuoteRequestStatus = 
   | 'NEW'

@@ -4,7 +4,6 @@ import {
   Clock,
   Layers,
   Globe,
-  Send,
   Linkedin,
   Facebook,
   Twitter,

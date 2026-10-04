@@ -3,7 +3,6 @@ import {
   Package,
   Menu,
   X,
-  ArrowRight,
   Shield,
   MapPin,
   Calculator,

@@ -7,11 +7,9 @@ import {
   Clock,
   AlertTriangle,
   CheckCircle2,
-  Sliders,
-  RotateCcw,
   Undo2
 } from 'lucide-react';
-import { Shipment, TrackingEvent, ShipmentStatus } from '../../types/shipment';
+import { Shipment, TrackingEvent } from '../../types/shipment';
 import {
   applyHoldState,
   applyResumeState,

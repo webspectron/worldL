@@ -10,30 +10,19 @@ import {
   CheckCircle2,
   AlertTriangle,
   Copy,
-  Link2,
   ArrowLeft,
   ArrowRight,
   Headphones,
   Check,
   Phone,
   Mail,
-  Search,
-  Radio,
   Clock,
-  Compass,
-  AlertCircle,
-  HelpCircle,
   Car,
-  Key,
-  Flame,
   FileText,
   Activity,
   Layers,
   Bell,
-  Printer,
-  Share2,
   ChevronDown,
-  ChevronUp,
   RotateCcw,
   PawPrint,
   Heart,
@@ -42,7 +31,6 @@ import {
   Zap,
   Scale,
   Box,
-  Shield,
   Container,
   Stethoscope
 } from 'lucide-react';
@@ -134,10 +122,8 @@ export const TrackResultPage: React.FC<TrackResultPageProps> = ({
     return () => { stopped = true; clearInterval(interval); };
   }, [shipment?.trackingNumber]);
 
-  const [searchInput, setSearchInput] = useState('');
   const [supportOpen, setSupportOpen] = useState(false);
   const [copiedNumber, setCopiedNumber] = useState(false);
-  const [copiedLink, setCopiedLink] = useState(false);
   const [showEarlierEvents, setShowEarlierEvents] = useState(false);
   const [alertsModalOpen, setAlertsModalOpen] = useState(false);
   const [alertPhone, setAlertPhone] = useState('');
@@ -235,7 +221,6 @@ export const TrackResultPage: React.FC<TrackResultPageProps> = ({
   const totalWeight = Number(liveShipment?.totalWeightLbs || shipment?.totalWeightLbs || 0);
   const [unitSystem] = useUnitSystem();
   const totalWeightText = totalWeight > 0 ? formatWeight(totalWeight, unitSystem) : '—';
-  const totalPieces = Number(shipment?.totalPieces || 1);
   const dimensionsText = formatDimensions(liveShipment?.dimensions || shipment?.dimensions, unitSystem);
 
   // Parties data — only Full Name and Street Address are required at booking (see
@@ -304,20 +289,6 @@ export const TrackResultPage: React.FC<TrackResultPageProps> = ({
     navigator.clipboard.writeText(trackingNum);
     setCopiedNumber(true);
     setTimeout(() => setCopiedNumber(false), 2500);
-  };
-
-  const handleCopyShareableLink = () => {
-    const url = `${window.location.origin}${window.location.pathname}#/track/${trackingNum}`;
-    navigator.clipboard.writeText(url);
-    setCopiedLink(true);
-    setTimeout(() => setCopiedLink(false), 2500);
-  };
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchInput.trim()) {
-      onTrackAnother(searchInput.trim());
-    }
   };
 
   // Automated routing & planned milestone calculations. The mode (road, air or sea legs) comes

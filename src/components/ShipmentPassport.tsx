@@ -32,7 +32,6 @@ export const ShipmentPassport: React.FC<ShipmentPassportProps> = ({
         {stages.map((stage, idx) => {
           const isCompleted = stage.status === 'completed';
           const isCurrent = stage.status === 'current';
-          const isUpcoming = stage.status === 'upcoming';
 
           return (
             <div

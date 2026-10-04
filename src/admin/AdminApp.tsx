@@ -12,18 +12,11 @@ import { api } from '../services/api';
 import type { ContactMessage } from '../types/admin';
 import { ShipmentControlModal } from './components/ShipmentControlModal';
 import { ErrorBoundary } from '../components/ErrorBoundary';
-import { Shipment, ShipmentStatus } from '../types/shipment';
+import { Shipment } from '../types/shipment';
 import { useAdminData } from '../context/AdminDataContext';
 import {
-  Radio,
   CheckCircle2,
-  AlertCircle,
-  X,
-  Send,
-  Eye,
-  FileCheck,
-  Package,
-  Layers
+  AlertCircle
 } from 'lucide-react';
 
 interface AdminAppProps {

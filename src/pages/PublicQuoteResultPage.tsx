@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  FileText,
   CheckCircle2,
   Clock,
   Truck,

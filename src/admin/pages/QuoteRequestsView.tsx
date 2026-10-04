@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Search,
-  Filter,
   ArrowRight,
   CheckCircle2,
   XCircle,
@@ -13,17 +12,13 @@ import {
   Mail,
   MapPin,
   Package,
-  Layers,
   FileText,
   DollarSign,
   Calendar,
-  AlertTriangle,
   Send,
   Eye,
-  Tag,
   ShieldCheck,
   RotateCcw,
-  Sparkles,
   ArrowLeft,
   Lock,
   Truck
