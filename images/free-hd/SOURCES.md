@@ -20,4 +20,3 @@ The only lettering is the vessel name "CHARLES ISLAND / NASSAU" on the stern in 
 | service-priority-express.jpg | 2400×4240 | https://www.pexels.com/photo/airplane-jet-engine-on-geneva-airport-runway-30210227/ | Coen Crevels | Pexels License | 2026-10-02 |
 | service-freight-linehaul.jpg | 5464×3640 | https://www.pexels.com/photo/aerial-photo-of-cargo-ship-near-intermodal-containers-2231744/ | Tom Fisk | Pexels License | 2026-10-02 |
 | track-result-vehicle.jpg | 4000×5000 | https://www.pexels.com/photo/a-trailer-truck-on-the-road-5410923/ | Ahmet Polat | Pexels License | 2026-10-02 |
-| contact-team.jpg | 5200×3467 | https://www.pexels.com/photo/worker-in-a-warehouse-4483941/ | Tiger Lily | Pexels License | 2026-10-02 |

@@ -497,7 +497,6 @@ Every photo is unbranded stock (sources in `images/*/SOURCES.md`); alt text desc
 | track-result-vehicle | images/free-hd/track-result-vehicle.jpg (cropped) | Truck and trailer on a highway at dusk |
 | about-operations | images/free-pexels/about-operations.jpg | Warehouse staff member checking stock on a tablet between loaded pallet racks |
 | about-team | images/free-pexels/about-team.jpg (cropped) | Smiling support coordinator wearing a headset |
-| contact-team | images/free-hd/contact-team.jpg (cropped; not placed on a page yet) | Warehouse worker checking stock with a tablet and a handheld scanner |
 | og-image | images/free-hd/hero-home.jpg + logo | (social preview, no alt needed) |
 
 `hero-globe-fallback` is produced in Prompt 24 from the 3D globe.

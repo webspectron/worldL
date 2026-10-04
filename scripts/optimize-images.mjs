@@ -224,7 +224,6 @@ const PHOTOS = [
   // Shown as a 72 px thumbnail: crop tight on the truck.
   { name: 'track-result-vehicle', src: 'free-hd/track-result-vehicle.jpg', kind: 'card', crop: { left: 700, top: 1350, width: 2300, height: 2300 } },
   { name: 'about-operations', src: 'free-pexels/about-operations.jpg', kind: 'card' },
-  { name: 'contact-team', src: 'free-hd/contact-team.jpg', kind: 'card', crop: { left: 1000, top: 0, width: 3467, height: 3467 } },
   // Shown as a 72 px thumbnail: crop tight on the face.
   { name: 'about-team', src: 'free-pexels/about-team.jpg', kind: 'card', crop: { left: 950, top: 80, width: 900, height: 900 } },
 ];

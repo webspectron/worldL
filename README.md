@@ -169,7 +169,7 @@ Brand facts (company name, email, domain, admin subdomain, tracking prefix) live
 ├── src/
 │   ├── App.tsx            Hash routing (KNOWN_PAGES) and admin host gating
 │   ├── pages/             Public pages (Home, Track, TrackResult, Services, Quote, Ship, ...)
-│   ├── components/        Header, Footer, maps, ShipmentTimeline, Barcode, ...
+│   ├── components/        Header, Footer, maps, Barcode, ...
 │   ├── admin/             Operations console (dashboard, shipments, events, documents, quotes, settings)
 │   ├── services/          API client, geocoding, routing, planning and simulation engines
 │   ├── shared/            Code shared with the server (tracking IDs, references, statuses, time zones, units)
